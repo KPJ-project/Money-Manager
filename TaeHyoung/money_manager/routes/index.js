@@ -1,6 +1,14 @@
 
+/*
+
+module.exports 가 의미하는 것은, module.exports 변수에 할당되어 있는 함수들을
+다른 곳에서도 require를 이용해서 사용하고 싶을 때 
+다음과 같이 지정하여 사용을 한다.
+
+*/
 
 module.exports = function(app, MoneyManager){
+    
     // GET ALL List
     app.get('/api/list', function(req, res){
         MoneyManager.find(function(err, records){
@@ -12,6 +20,7 @@ module.exports = function(app, MoneyManager){
         })
     });
 
+    //POST records
     app.post('/api/create', function(req, res){
         var money = new MoneyManager();
         
@@ -21,7 +30,6 @@ module.exports = function(app, MoneyManager){
         money.price = req.body.price;
         money.etc = req.body.etc;
         money.cc = req.body.cc;
-        console.log(money.date)
 
         money.save(function(err){
             if(err){
@@ -29,10 +37,11 @@ module.exports = function(app, MoneyManager){
                 res.json({result: 0});
                 return ;
             }
-
-            res.json({result: 1});
+            res.json(
+                {
+                    result: 1
+                }
+            );
         });
     });
-
-
 }
