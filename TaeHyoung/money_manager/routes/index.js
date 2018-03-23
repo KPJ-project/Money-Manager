@@ -1,4 +1,3 @@
-
 /*
 
 module.exports 가 의미하는 것은, module.exports 변수에 할당되어 있는 함수들을
@@ -7,8 +6,18 @@ module.exports 가 의미하는 것은, module.exports 변수에 할당되어 �
 
 */
 
+var multer = require('multer');
+var upload = multer({dest: 'uploads/'})
+
+
 module.exports = function(app, MoneyManager){
     
+    app.post('/upload', upload.single('img'), function(req, res){
+        res.send('success' + req.file);
+        console.log(req.file);
+    });
+
+
     // GET ALL List
     app.get('/api/list', function(req, res){
         MoneyManager.find(function(err, records){
@@ -16,12 +25,13 @@ module.exports = function(app, MoneyManager){
                 return res.status(500).send({error: 'database fail'});
             }
 
+            console.log("kwon");
             res.json(records);
         })
     });
 
     //POST records
-    app.post('/api/create', function(req, res){
+    app.post('/api/create', upload.single('receipt_img'), function(req, res){
         var money = new MoneyManager();
         
         money.date = new Date(req.body.date);
@@ -30,6 +40,7 @@ module.exports = function(app, MoneyManager){
         money.price = req.body.price;
         money.etc = req.body.etc;
         money.cc = req.body.cc;
+        money.receipt_img = req.file.path;
 
         money.save(function(err){
             if(err){
@@ -44,4 +55,61 @@ module.exports = function(app, MoneyManager){
             );
         });
     });
+
+    app.get('/api/list/:id', function(req, res){
+        MoneyManager.findOne({_id: req.params.id}, function(err, moneymanager){
+            if(err) return res.status(500).json({error: err});
+
+            if(!moneymanager) return res.status(404).json({error:"book no"})
+            res.json(moneymanager);
+        });
+
+    });
+
+    app.delete('/api/delete/:id', function(req, res){
+        MoneyManager.remove({_id: req.params.id}, function(err, moneymanager){
+            if(err) return res.status(500).json({error: err, result:1});
+
+            // if(!moneymanager.result.n) return res.status(404).json({error:"book no"})
+            // res.json({message: "book deleted"})
+
+            res.json({message: "list deleted", result: 1})
+        });
+    });
+
+    app.put('/api/update/:id', function(req, res){
+        MoneyManager.update({ _id: req.params.id }, { $set: req.body }, function(err, output){
+            console.log(req.body)
+            console.log(output)
+            if(err) res.status(500).json({ error: 'database failure', result: 0 });
+            console.log(output);
+            if(!output.n) return res.status(404).json({ error: 'list not found' ,result: 0});
+            res.json( { message: 'list updated', result: 1 } );
+        })
+    });
+
+
+
+    //RETRIEVE 
+    // //PUT Update
+    // app.put('api/update/:id', function(req, res){
+    //     moneymanager.findByIdAndUpdate(req.params.id, req.body, {new: true}, function(err){
+    //         console.log(req.body)
+    //         if (err){
+    //             res.json({result: 0});
+    //             return ;
+    //         }
+    //         res.json(
+    //             {
+    //                 result: 1
+    //             }
+    //         );
+    //     });
+    // });
+
+    // //DELETE delete
+    // app.delete('api/delete/:id', function(req, res){
+    //     console.log(req);
+    //     console.log(res);
+    // });
 }

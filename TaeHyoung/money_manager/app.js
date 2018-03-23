@@ -4,6 +4,7 @@ var app = express();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
+
 /*
 bodyparser는 바디를 파싱하여서, req.body 객체로 접근할 수 있도록 도와준다.
 
@@ -16,6 +17,7 @@ bodyparser는 바디를 파싱하여서, req.body 객체로 접근할 수 있도
 //미들웨어
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
+app.use('/image', express.static('uploads'));
 
 //포트 설정
 var port = process.env.PORT || 8080; //기본은 8080으로 쓰고, 환경변수 설정으로 포트를 입력 시 그 포트로 대체한다는 뜻이다.

@@ -7,7 +7,8 @@ var MoneyManagerSchema = new Schema({
     contents: String,
     price: Number,
     etc: String,
-    cc: Boolean
+    cc: Boolean,
+    receipt_img: String,
 });
 
 module.exports = mongoose.model('moneymanager', MoneyManagerSchema);
