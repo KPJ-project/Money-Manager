@@ -6,7 +6,8 @@ var housekeepingbookSchema = new Schema({
     category: String,
     contents: String,
     price: Number,
-    etc: String
+    etc: String,
+    receipt: String
 });
 
 module.exports = mongoose.model('housekeepingbook', housekeepingbookSchema);

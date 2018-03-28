@@ -8,6 +8,7 @@ var mongoose    = require('mongoose');
 // [CONFIGURE APP TO USE bodyParser]
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use('/download', express.static('uploads'));
 
 // [CONFIGURE SERVER PORT]
 var port = process.env.PORT || 8080;
