@@ -13,8 +13,10 @@ router.get('/', (req, res) => {
 
 
 router.get('/moneyid/:moneyid', (req, res) => {
+    console.log(req.params.moneyid);
     Money.findOneByMoneyid(req.params.moneyid)
         .then((money) => {
+            console.log(money);
             if (!money) return res.status(404).send({ err: 'Money not found' });
             res.send(`findOne successfully: ${money}`);
         })
@@ -31,9 +33,8 @@ router.post('/', (req, res) => {
 
 
 router.put('/moneyid/:moneyid', (req, res) => {
-    Money.updateByMoneyid(req.params.moneyid, req.body)
-        .then(money => res.send(money))
-        .catch(err => res.status(500).send(err));
+    console.log(req.body);
+    Money.updateByMoneyid(req.params.moneyid, req.body).then(money =>console.log(money)).catch(err => res.status(500).send(err));
 });
 
 

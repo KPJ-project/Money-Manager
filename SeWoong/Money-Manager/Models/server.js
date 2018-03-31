@@ -27,18 +27,20 @@ moneySchema.statics.findAll = function () {
 };
 
 // Find One by todoid
-moneySchema.statics.findOneByTodoid = function (todoid) {
+moneySchema.statics.findOneByMoneyid = function (todoid) {
+    console.log(todoid);
     return this.findOne({ todoid });
 };
 
 // Update by todoid
-moneySchema.statics.updateByTodoid = function (todoid, payload) {
+moneySchema.statics.updateByMoneyid = function (todoid, payload) {
     // { new: true }: return the modified document rather than the original. defaults to false
+    console.log("payload : " + payload.category);
     return this.findOneAndUpdate({ todoid }, payload, { new: true });
 };
 
 // Delete by todoid
-moneySchema.statics.deleteByTodoid = function (todoid) {
+moneySchema.statics.deleteByMoneyid = function (todoid) {
     return this.remove({ todoid });
 };
 
