@@ -6,7 +6,7 @@ router.get('/', (req, res) => {
     Money.findAll()
         .then((moneys) => {
             if (!moneys.length) return res.status(404).send({ err: 'Money not found' });
-            res.send(`find successfully: ${moneys}`);
+            res.send(moneys/*`${moneys}`*/);
         })
         .catch(err => res.status(500).send(err));
 });
