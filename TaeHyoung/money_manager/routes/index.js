@@ -30,6 +30,42 @@ module.exports = function(app, MoneyManager){
         })
     });
 
+    //지출
+    app.get('/api/list/cost', function(req, res){
+        MoneyManager.find({"cost": true}, function(err, records){
+            if(err){
+                return res.status(500).send({error: 'database fail'});
+            }
+
+            console.log("kwon");
+            res.json(records);
+        })
+    });
+
+    //수입
+    app.get('/api/list/income', function(req, res){
+        MoneyManager.find({"cost":false}, function(err, records){
+            if(err){
+                return res.status(500).send({error: 'database fail'});
+            }
+
+            console.log("kwon");
+            res.json(records);
+        })
+    });
+
+    //통계
+    app.get('/api/list/stat', function(req, res){
+        MoneyManager.find({"cost":false}, function(err, records){
+            if(err){
+                return res.status(500).send({error: 'database fail'});
+            }
+
+            console.log("kwon");
+            res.json(records);
+        })
+    });  
+
     //POST records
     app.post('/api/create', upload.single('receipt_img'), function(req, res){
         var money = new MoneyManager();
@@ -41,6 +77,7 @@ module.exports = function(app, MoneyManager){
         money.etc = req.body.etc;
         money.cc = req.body.cc;
         money.receipt_img = req.file.path;
+        money.cost = req.body.cost;
 
         money.save(function(err){
             if(err){
@@ -83,7 +120,6 @@ module.exports = function(app, MoneyManager){
             console.log(output)
             if(err) res.status(500).json({ error: 'database failure', result: 0 });
             console.log(output);
-            if(!output.n) return res.status(404).json({ error: 'list not found' ,result: 0});
             res.json( { message: 'list updated', result: 1 } );
         })
     });

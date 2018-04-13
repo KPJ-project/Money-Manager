@@ -9,6 +9,7 @@ var MoneyManagerSchema = new Schema({
     etc: String,
     cc: Boolean,
     receipt_img: String,
+    cost: Boolean,
 });
 
 module.exports = mongoose.model('moneymanager', MoneyManagerSchema);
