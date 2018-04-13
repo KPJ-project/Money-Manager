@@ -29,19 +29,19 @@ moneySchema.statics.findAll = function () {
 // Find One by todoid
 moneySchema.statics.findOneByMoneyid = function (todoid) {
     console.log(todoid);
-    return this.findOne({ todoid });
+    return this.findOne({ _id : todoid });
 };
 
 // Update by todoid
 moneySchema.statics.updateByMoneyid = function (todoid, payload) {
     // { new: true }: return the modified document rather than the original. defaults to false
     console.log("payload : " + payload.category);
-    return this.findOneAndUpdate({ todoid }, payload, { new: true });
+    return this.findOneAndUpdate({ _id : todoid }, payload, { new: true });
 };
 
 // Delete by todoid
 moneySchema.statics.deleteByMoneyid = function (todoid) {
-    return this.remove({ todoid });
+    return this.remove({ _id : todoid });
 };
 
 // Create Model & Export
