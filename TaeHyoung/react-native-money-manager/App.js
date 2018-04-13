@@ -7,6 +7,8 @@ import GetMoney from './GetMoney'
 import LostMoney from './LostMoney'
 import Cost from './Cost'
 import SegmentExample from './Segment'
+import Main from './Main'
+import CalcInput from './CalcInput'
 
 export default class App extends React.Component {
 
@@ -16,14 +18,25 @@ export default class App extends React.Component {
 
 
           <Scene key="root">
-          
+
+          <Scene
+              key="mainPage"
+              component={Main}
+              title= "태형이 가계부😍 메인"
+              initial
+              />
+
+          <Scene
+              key="calcInput"
+              component={CalcInput}
+              title= "태형이 가계부😍 - 입력"
+              />
+
           <Scene
               key="segment"
               component={SegmentExample}
-              title= "태형이 가계부😍"
-              initial
+              title= "태형이 가계부😍 - 보기"
                />
-            
             
             <Scene
               key="costmoney"
@@ -34,7 +47,10 @@ export default class App extends React.Component {
             <Scene
               key="lostmoney"
               component={LostMoney}
-              title= "LostMoney" />
+              title= "LostMoney" 
+              />
+
+
 
             </Scene>
 
