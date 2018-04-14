@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button, Alert,ScrollView, AsyncStorage } from 'react-native';
-import Detail from './detail';
+import MoneyContent from './MoneyContent';
 
 import GetMoney from './GetMoney'
 import LostMoney from './LostMoney'
@@ -8,7 +8,7 @@ import { Actions } from 'react-native-router-flux';
 import { Container, Header, Left, Body, Right,  Icon, Segment, Content } from 'native-base';
 
 
-export default class Cost extends React.Component {
+export default class Income extends React.Component {
 
 constructor(props) {
   super(props);
@@ -52,7 +52,7 @@ async _calIncome (result) {
 
       return (
         <View>
-            <Detail
+            <MoneyContents
                 
                 id={index + 1}
                 contents={contents}

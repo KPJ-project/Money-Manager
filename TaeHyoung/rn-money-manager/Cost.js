@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button, Alert,ScrollView, AsyncStorage } from 'react-native';
-import Detail from './detail';
+import MoneyContent from './MoneyContent';
 
 import GetMoney from './GetMoney'
 import LostMoney from './LostMoney'
@@ -53,7 +53,7 @@ async _calCost (result) {
       
       return (
         <View>
-            <Detail
+            <MoneyContent
                 
                 id={index + 1}
                 contents={contents}

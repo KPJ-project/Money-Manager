@@ -10,49 +10,34 @@ import Income from './Income'
 
 
 
-
 export default class Stat extends Component{
-    state = {
-        rest_val: 0,
-        cnt: 0
+    constructor(props) {
+        super(props);
+        this.state = {
+        };
+        }
+        
+    componentDidMount() {
+        this._calResult();
     }
-    // async _calResult() {
-    //     let income = await AsyncStorage.getItem("income");
-    //     let cost = await AsyncStorage.getItem("cost");
-    //     console.log(income);
-    //     console.log(cost);     
-    // }
 
-    // this._calResult();
-
-    
-    // let result = Number(income) + Number(cost)
-
-    
     async _calResult() {
         try{
-            const cost_val = await AsyncStorage.getItem("cost");
-            const income_val = await AsyncStorage.getItem("income");
+            let cost_val = await AsyncStorage.getItem("cost");
+            let income_val = await AsyncStorage.getItem("income");
+
+            console.log(cost_val);
+
+            this.setState({rest_val:Number(income_val) + Number(cost_val)})
            
-                if(cost_val !== null && income_val !== null){
-                    console.log("_test()!!")
-                    console.log(cost_val);
-                    console.log(income_val);
-                    
-                    this.setState({rest_val: Number(income_val) - Number(cost_val)});
-                }
-  
         }
         catch (error){
             console.log(error);
         }
+        
     }
-
     render(){
-
-        this._calResult();
-        //this._test();
-
+        
         return(
             <View style={[styles.container]}>
                 <Text style={[styles.welcome]}>

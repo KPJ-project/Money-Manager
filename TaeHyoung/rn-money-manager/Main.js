@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button, Alert,ScrollView  } from 'react-native';
-import Detail from './detail';
+import MoneyContent from './MoneyContent';
 
 import GetMoney from './GetMoney'
 import LostMoney from './LostMoney'

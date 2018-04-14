@@ -1,7 +1,8 @@
 import React from 'react'
 import { StyleSheet, Text, View, Image } from 'react-native';
+import { Container, Header, Content, Button } from 'native-base';
 
-class Detail extends React.Component {
+class MoneyContent extends React.Component {
 
     render () {
         let date = new Date();
@@ -26,7 +27,14 @@ class Detail extends React.Component {
                         <Text>$:</Text><Text style={[styles.price]}>{(this.props.price || 0)} 원</Text>
                     </View>
                 </View>
-                <Text style={[styles.rank]}>{(this.props.etc || 'Contents')}</Text>
+                {/* <Text style={[styles.rank]}>{(this.props.etc || 'Contents')}</Text> */}
+                <View style={styles.rightButton}>
+                <Button danger iconRight>
+                    <Text style={{color:"white",paddingLeft:10, paddingRight:10}}>
+                        보기
+                    </Text>
+                </Button>
+                </View>
 
                 
             </View>
@@ -83,6 +91,9 @@ const styles = StyleSheet.create({
         color: '#a8a5a5',
         marginRight: 15,
     },
+    rightButton: {
+        alignItems:"flex-end"
+    } 
 });
 
-export default Detail;
+export default MoneyContent;

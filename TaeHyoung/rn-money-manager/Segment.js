@@ -3,6 +3,7 @@ import {StyleSheet} from 'react-native'
 import { Container,Title, Header, Left, Body, Right, Button, Icon, Segment, Content, Text } from 'native-base';
 import { Actions } from 'react-native-router-flux'
 
+
 import LostMoney from './LostMoney'
 import GetMoney from './GetMoney'
 import Cost from './Cost'
