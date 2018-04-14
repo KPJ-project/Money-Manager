@@ -9,12 +9,13 @@ import Cost from './Cost'
 import SegmentExample from './Segment'
 import Main from './Main'
 import CalcInput from './CalcInput'
+import Detail from './Detail'
 
 export default class App extends React.Component {
 
   render(){
     return (
-      <Router>
+      <Router uriPrefix={'localhost:8080/api'}>
 
 
           <Scene key="root">
@@ -50,6 +51,12 @@ export default class App extends React.Component {
               title= "LostMoney" 
               />
 
+            <Scene
+              key="detail"
+              path={"/list/:id"}
+              component={Detail}
+              title= "태형이 가계부😍 - 상세페이지" 
+              />
 
 
             </Scene>

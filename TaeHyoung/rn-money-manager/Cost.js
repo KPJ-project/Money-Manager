@@ -54,12 +54,13 @@ async _calCost (result) {
       return (
         <View>
             <MoneyContent
-                
-                id={index + 1}
+                id={_id}
+                num={index + 1}
                 contents={contents}
                 price={price} 
                 etc={etc}
                 category={category}
+                img={receipt_img}
                 />
 
         </View>     

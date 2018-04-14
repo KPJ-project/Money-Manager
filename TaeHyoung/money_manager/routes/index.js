@@ -7,7 +7,7 @@ module.exports 가 의미하는 것은, module.exports 변수에 할당되어 �
 */
 
 var multer = require('multer');
-var upload = multer({dest: 'uploads/'})
+var upload = multer({dest: 'image/'})
 
 
 module.exports = function(app, MoneyManager){
@@ -69,7 +69,6 @@ module.exports = function(app, MoneyManager){
     //POST records
     app.post('/api/create', upload.single('receipt_img'), function(req, res){
         var money = new MoneyManager();
-        
         money.date = new Date(req.body.date);
         money.category = req.body.category;
         money.contents = req.body.contents;

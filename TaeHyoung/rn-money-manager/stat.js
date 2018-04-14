@@ -28,7 +28,7 @@ export default class Stat extends Component{
 
             console.log(cost_val);
 
-            this.setState({rest_val:Number(income_val) + Number(cost_val)})
+            this.setState({rest_val:Number(income_val) - Number(cost_val)})
            
         }
         catch (error){
