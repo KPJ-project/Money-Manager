@@ -1,5 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, Alert,ScrollView, AsyncStorage, Image } from 'react-native';
+import { StyleSheet, Text, View, Alert,ScrollView, AsyncStorage, Image } from 'react-native';
+import { Container, Header, Content, Button } from 'native-base';
 import { Actions } from 'react-native-router-flux'
 
 
@@ -11,6 +12,7 @@ export default class Detail extends React.Component{
         console.log(props);
         this.state = {
           datas: [],
+          delete: false,
         };
       }
       
@@ -37,13 +39,21 @@ export default class Detail extends React.Component{
             console.error(error);
           });
       }
-      
-      
-    //   async _calCost (result) {
-    //     await AsyncStorage.setItem("cost", result.toString());
+
+      getDelete() {
+        return fetch('http://localhost:8080/api/delete/' + this.props.id, {"method":"delete"})
+        .then((response) => console.log(response))
+        .then((responseJson) => {
+            
+        this.getListData();
+        Actions.costmoney();
         
-    //   }
+        }).catch((error) => {
+          console.error(error);
+        });
+      }
       
+
       
          render(){
             let {date, _id, category, contents, price, etc, cc, receipt_img} = this.state.datas;
@@ -54,38 +64,69 @@ export default class Detail extends React.Component{
             return (
                 <View style={styles.container}>
 
-                <View style={styles.image}>
-                    <Image style={{width: 200, height: 200}} source={{uri: 'http://localhost:8080/image/house@2x.png'}}/>
+                    <View style={styles.image}>
+                        <Image style={{width: 200, height: 200}} source={{uri: 'http://localhost:8080/image/house@2x.png'}}/>
 
-                </View>
-                <View style={styles.contents}>
-                    <View style={styles.dateInText}>
-                        <Text style={styles.text}>
-                            { date == null ? date : date.split("T")[0]}
-                        </Text>
-                        <Text style={styles.text}>
-                            {category} / {price}
-                        </Text>
                     </View>
-                    <View style={styles.contentsInText}>
-                        <Text style={styles.text}>
-                            내용
-                        </Text>                    
-                        <Text style={styles.textContents}>
-                            {contents}
-                        </Text>
+                    
+
+                    <View style={styles.contents}>
+                        <View style={styles.dateInText}>
+                            <Text style={styles.text}>
+                                { date == null ? date : date.split("T")[0]}
+                            </Text>
+                            <Text style={styles.text}>
+                                {category} / {price}
+                            </Text>
+                        </View>
+                        <View style={styles.contentsInText}>
+                            <Text style={styles.text}>
+                                내용
+                            </Text>                    
+                            <Text style={styles.textContents}>
+                                {contents}
+                            </Text>
+                        </View>
+                        <View style={styles.contentsInText}>
+                            <Text style={styles.text}>
+                                기타
+                            </Text>                    
+                            <Text style={styles.textContents}>
+                                {etc}
+                            </Text>
+                        </View>
                     </View>
-                    <View style={styles.contentsInText}>
-                        <Text style={styles.text}>
-                            기타
-                        </Text>                    
-                        <Text style={styles.textContents}>
-                            {etc}
-                        </Text>
+
+
+                    <View style={styles.bottomButtons}>
+                        <Button style={styles.buttonUpdate}  danger iconRight onPress={() => {}}>
+                            <Text style={{color:"white",paddingLeft:10, paddingRight:10, fontSize:30}}>
+                                수정
+                            </Text>
+                        </Button> 
+
+                        <Button style={styles.buttonDelete} danger iconRight onPress={() => {
+
+                            Alert.alert(
+                                '삭제',
+                                '정말로 삭제하시겠습니까?',
+                                [
+                                {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+                                {text: 'OK', onPress: () =>{
+                                    this.getDelete();
+                                } 
+                            },
+                                ],
+                                { cancelable: false }
+                            )
+
+                        }}>
+                            <Text style={{color:"white",paddingLeft:10, paddingRight:10, fontSize:30}}>
+                                삭제
+                            </Text>
+                        </Button>                                                                           
                     </View>
-                
-                </View>
-                                                                                
+
                 </View>
                 );
          }
@@ -131,6 +172,16 @@ const styles = StyleSheet.create({
     },
     textContents:{
         fontSize:15
+    },
+    bottomButtons:{
+        flexDirection: 'row',
+        paddingTop:50
+    },
+    buttonUpdate:{
+        marginRight:20
+    },
+    buttonDelete:{
+        marginLeft:20
     }
     });
       

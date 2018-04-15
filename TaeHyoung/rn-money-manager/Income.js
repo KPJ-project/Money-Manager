@@ -1,11 +1,12 @@
-import React from 'react';
-import { StyleSheet, Text, View, Button, Alert,ScrollView, AsyncStorage } from 'react-native';
+import React from 'react'
+import { StyleSheet, Text, View, Alert,ScrollView, AsyncStorage } from 'react-native';
 import MoneyContent from './MoneyContent';
 
 import GetMoney from './GetMoney'
 import LostMoney from './LostMoney'
 import { Actions } from 'react-native-router-flux';
-import { Container, Header, Left, Body, Right,  Icon, Segment, Content } from 'native-base';
+import { Container, Header, Left, Body, Right,  Icon, Segment, Content,Button } from 'native-base';
+import MonthSelectorCalendar from 'react-native-month-selector';
 
 
 export default class Income extends React.Component {
@@ -37,6 +38,33 @@ getListData() {
     });
 }
 
+
+getListDataForMonth(month, year) {
+
+  var monthNumb = Number(month)+1
+
+  if(monthNumb == 13){
+    monthNumb = 1
+  }
+
+  var monthString = "0" + monthNumb.toString()
+  console.log(monthString);
+  return fetch('http://localhost:8080/api/list/income/'+monthString+"/"+year)
+    .then((response) => response.json())
+    .then((responseJson) => {
+
+      this.setState({
+        datas: responseJson,
+      });
+
+      console.log(this.state.datas);
+      return responseJson;
+      
+    }).catch((error) => {
+      console.error(error);
+    });
+}
+
 async _calIncome (result) {
   await AsyncStorage.setItem("income", result.toString());
 }
@@ -60,6 +88,7 @@ async _calIncome (result) {
                 etc={etc}
                 category={category}
                 img={receipt_img}
+                date={date}
                 />
 
         </View>     
@@ -72,7 +101,25 @@ async _calIncome (result) {
     
     return (
       <View style={styles.container}>
-                        
+      <Button style={[styles.topButtons]} full primary onPress={() => {this.getListData();}} >
+        <Text style={{color:"white",paddingLeft:10, paddingRight:10}}>
+            전체 리스트 보기
+        </Text>
+      </Button>
+
+        <MonthSelectorCalendar
+          style={styles.monthCalendar}
+          selectedDate={this.state.month}
+          monthTapped={(date) => {
+
+            this.setState({ month: date })
+
+            var mon = date.toISOString().split("T")[0].split("-")[1]
+            var year = date.toISOString().split("T")[0].split("-")[0]
+
+            this.getListDataForMonth(mon,year);
+           }}
+        />  
       <ScrollView style={styles.scroll} >
         {details}
       </ScrollView>

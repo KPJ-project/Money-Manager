@@ -45,7 +45,7 @@ class MoneyContent extends React.Component {
 
                 <View style={styles.contentsPart2}>
                     <Text>
-                     2015-04-12
+                     {this.props.date.split("T")[0]}
                     </Text>
                     
                 </View>

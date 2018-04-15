@@ -41,6 +41,39 @@ module.exports = function(app, MoneyManager){
             res.json(records);
         })
     });
+    
+    //월별 지출
+    app.get('/api/list/cost/:month/:year', function(req, res){
+
+        var start =req.params.year + "-" + req.params.month + "-" + "01"
+        
+        if(req.params.month == 4 || req.params.month == 6 || req.params.month == 9 || req.params.month == 11 )
+        {
+            var end =req.params.year + "-" + req.params.month + "-" + "30T23:59:59"
+        }
+        else if(req.params.month == 2)
+        {
+            var end =req.params.year + "-" + req.params.month + "-" + "28T23:59:59"
+        }
+        else{
+            var end =req.params.year + "-" + req.params.month + "-" + "31T23:59:59"
+        }
+
+        var start_date = new Date(start).toISOString();
+        var end_date = new Date(end).toISOString();
+
+        console.log(start_date);
+        console.log(end_date);
+
+        MoneyManager.find({"cost":true, "date":{"$gte":start_date, "$lt":end_date }}, function(err, records){
+            if(err){
+                console.log(err);
+                return res.status(500).send({error: 'database fail'});
+            }
+
+            res.json(records); 
+        })
+    });
 
     //수입
     app.get('/api/list/income', function(req, res){
@@ -51,6 +84,40 @@ module.exports = function(app, MoneyManager){
 
             console.log("kwon");
             res.json(records);
+        })
+    });
+
+
+    //월별 수입
+    app.get('/api/list/income/:month/:year', function(req, res){
+
+        var start =req.params.year + "-" + req.params.month + "-" + "01"
+        
+        if(req.params.month == 4 || req.params.month == 6 || req.params.month == 9 || req.params.month == 11 )
+        {
+            var end =req.params.year + "-" + req.params.month + "-" + "30T23:59:59"
+        }
+        else if(req.params.month == 2)
+        {
+            var end =req.params.year + "-" + req.params.month + "-" + "28T23:59:59"
+        }
+        else{
+            var end =req.params.year + "-" + req.params.month + "-" + "31T23:59:59"
+        }
+
+        var start_date = new Date(start).toISOString();
+        var end_date = new Date(end).toISOString();
+
+        console.log(start_date);
+        console.log(end_date);
+
+        MoneyManager.find({"cost":false, "date":{"$gte":start_date, "$lt":end_date }}, function(err, records){
+            if(err){
+                console.log(err);
+                return res.status(500).send({error: 'database fail'});
+            }
+
+            res.json(records); 
         })
     });
 
@@ -102,6 +169,7 @@ module.exports = function(app, MoneyManager){
 
     });
 
+    //삭제
     app.delete('/api/delete/:id', function(req, res){
         MoneyManager.remove({_id: req.params.id}, function(err, moneymanager){
             if(err) return res.status(500).json({error: err, result:1});

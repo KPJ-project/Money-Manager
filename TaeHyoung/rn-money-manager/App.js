@@ -43,6 +43,7 @@ export default class App extends React.Component {
               key="costmoney"
               component={Cost}
               title= "Cost"
+              
                />
             
             <Scene
@@ -58,6 +59,7 @@ export default class App extends React.Component {
               title= "태형이 가계부😍 - 상세페이지" 
               />
 
+              
 
             </Scene>
 
