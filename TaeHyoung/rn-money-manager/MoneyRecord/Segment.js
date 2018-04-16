@@ -4,11 +4,9 @@ import { Container,Title, Header, Left, Body, Right, Button, Icon, Segment, Cont
 import { Actions } from 'react-native-router-flux'
 
 
-import LostMoney from './LostMoney'
-import GetMoney from './GetMoney'
-import Cost from './Cost'
+import Expense from './Expense'
 import Income from './Income'
-import Stat from './stat'
+import Stat from './Stat'
 
 
 export default class SegmentExample extends Component {
@@ -48,7 +46,7 @@ export default class SegmentExample extends Component {
             <Content padder>
               
             {this.state.activeButton === 'first' ? <Income /> : 
-                this.state.activeButton === 'second' ? <Cost /> : <Stat />}
+                this.state.activeButton === 'second' ? <Expense /> : <Stat />}
               
             </Content>
           </Container>

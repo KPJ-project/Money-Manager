@@ -1,91 +1,81 @@
 import React from 'react';
 import { StyleSheet, Text, View, Alert,ScrollView, AsyncStorage, DatePickerIOS } from 'react-native';
+import { Container, Header, Left, Body, Right,  Icon, Segment, Content,Button } from 'native-base';
+import MonthSelectorCalendar from 'react-native-month-selector';
+import { Actions } from 'react-native-router-flux';
+
 import MoneyContent from './MoneyContent';
 
 
+export default class Expense extends React.Component {
 
-import GetMoney from './GetMoney'
-import LostMoney from './LostMoney'
-import { Actions } from 'react-native-router-flux';
-import { Container, Header, Left, Body, Right,  Icon, Segment, Content,Button } from 'native-base';
-import MonthSelectorCalendar from 'react-native-month-selector';
-//import MonthPicker from 'react-simple-month-picker';
+  constructor(props) {
+    super(props);
 
+      let date = new Date();
+      let now = date.toISOString()
 
-export default class Cost extends React.Component {
-
-constructor(props) {
-  super(props);
-
-    let date = new Date();
-    let now = date.toISOString()
-
-  this.state = {
-    datas: [],
-    chosenDate: new Date(),
-  
-
-  };
-
-  //this.setDate = this.setDate.bind(this);
-}
-
-componentDidMount() {
-  this.getListData()
-  
-}
-
-setDate(newDate) {
-  this.setState({chosenDate: newDate})
-}
-
-getListData() {
-  return fetch('http://localhost:8080/api/list/cost')
-    .then((response) => response.json())
-    .then((responseJson) => {
-
-      this.setState({
-        datas: responseJson,
-      });
-
-      return responseJson;
-      
-    }).catch((error) => {
-      console.error(error);
-    });
-}
-
-getListDataForMonth(month, year) {
-
-  var monthNumb = Number(month)+1
-
-  if(monthNumb == 13){
-    monthNumb = 1
+      this.state = {
+        datas: [],
+        chosenDate: new Date(),
+      };
   }
 
-  var monthString = "0" + monthNumb.toString()
-  console.log(monthString);
-  return fetch('http://localhost:8080/api/list/cost/'+monthString+"/"+year)
-    .then((response) => response.json())
-    .then((responseJson) => {
+  componentDidMount() {
+    this.getListData()
+    
+  }
 
-      this.setState({
-        datas: responseJson,
+  setDate(newDate) {
+    this.setState({chosenDate: newDate})
+  }
+
+  getListData() {
+    return fetch('http://localhost:8080/api/list/cost')
+      .then((response) => response.json())
+      .then((responseJson) => {
+
+        this.setState({
+          datas: responseJson,
+        });
+
+        return responseJson;
+        
+      }).catch((error) => {
+        console.error(error);
       });
+  }
 
-      console.log(this.state.datas);
-      return responseJson;
-      
-    }).catch((error) => {
-      console.error(error);
-    });
-}
+  getListDataForMonth(month, year) {
+
+    var monthNumb = Number(month)+1
+
+    if(monthNumb == 13){
+      monthNumb = 1
+    }
+
+    var monthString = "0" + monthNumb.toString()
+    console.log(monthString);
+    return fetch('http://localhost:8080/api/list/cost/'+monthString+"/"+year)
+      .then((response) => response.json())
+      .then((responseJson) => {
+
+        this.setState({
+          datas: responseJson,
+        });
+
+        console.log(this.state.datas);
+        return responseJson;
+        
+      }).catch((error) => {
+        console.error(error);
+      });
+  }
 
 
-async _calCost (result) {
-  await AsyncStorage.setItem("cost", result.toString());
-  
-}
+  async _calCost (result) {
+    await AsyncStorage.setItem("cost", result.toString());
+  }
 
   render() {
     
@@ -93,7 +83,6 @@ async _calCost (result) {
     let details = this.state.datas.map((data, index) => {
       const {date, _id, category, contents, price, etc, cc, receipt_img} = data;
   
-
       result = result + price
       
       return (
@@ -110,13 +99,13 @@ async _calCost (result) {
                 />
 
         </View>     
-    );
-
-    })
+        );
+      })
 
     this._calCost(result);
 
     return (
+
       <View style={styles.container}>
           <Button style={[styles.topButtons]} full primary onPress={() => {this.getListData();}} >
             <Text style={{color:"white",paddingLeft:10, paddingRight:10}}>
@@ -138,20 +127,16 @@ async _calCost (result) {
            }}
         />
 
-      <ScrollView style={styles.scroll} >
-        {details}
-      </ScrollView>
+        <ScrollView style={styles.scroll} >
+          {details}
+        </ScrollView>
 
-        {/* <Button title="Go lostmoney" onPress={()=>Actions.lostmoney()} />
-             */}
-        
-
-      <Text style={[styles.cost]}>지출 : {result}원 </Text>
+        <Text style={[styles.cost]}>지출 : {result}원 </Text>
       </View>
       );
   }
 }
-//<Text style={[styles.toptitle]}>{ cost_result }</Text>
+
 
 const styles = StyleSheet.create({
   container: {

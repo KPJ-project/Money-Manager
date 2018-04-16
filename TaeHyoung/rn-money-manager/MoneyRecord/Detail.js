@@ -4,7 +4,6 @@ import { Container, Header, Content, Button } from 'native-base';
 import { Actions } from 'react-native-router-flux'
 
 
-
 export default class Detail extends React.Component{
 
     constructor(props) {
@@ -16,11 +15,11 @@ export default class Detail extends React.Component{
         };
       }
       
-      componentDidMount() {
+    componentDidMount() {
         this.getListData()
       }
       
-      getListData() {
+    getListData() {
         return fetch('http://localhost:8080/api/list/' + this.props.id)
           .then((response) => response.json())
           .then((responseJson) => {
@@ -40,7 +39,7 @@ export default class Detail extends React.Component{
           });
       }
 
-      getDelete() {
+    getDelete() {
         return fetch('http://localhost:8080/api/delete/' + this.props.id, {"method":"delete"})
         .then((response) => console.log(response))
         .then((responseJson) => {
@@ -52,16 +51,11 @@ export default class Detail extends React.Component{
           console.error(error);
         });
       }
-      
 
-      
-         render(){
-            let {date, _id, category, contents, price, etc, cc, receipt_img} = this.state.datas;
-            console.log(this.state.datas)
-            console.log(date);
-            //let crop_date = date.split("T")[0];
-            //let crop_date= "2015-04-12"
-            return (
+    render(){
+        let {date, _id, category, contents, price, etc, cc, receipt_img} = this.state.datas;
+
+        return (
                 <View style={styles.container}>
 
                     <View style={styles.image}>
@@ -128,11 +122,9 @@ export default class Detail extends React.Component{
                     </View>
 
                 </View>
-                );
-         }
-          
-  
-        }  
+            );
+        }
+    }  
 
 
 const styles = StyleSheet.create({

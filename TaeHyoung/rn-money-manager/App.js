@@ -1,70 +1,59 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button, Alert,ScrollView } from 'react-native';
-import { Router, Scene } from 'react-native-router-flux'
-import MoneyContent from './MoneyContent';
 
-import GetMoney from './GetMoney'
-import LostMoney from './LostMoney'
-import Cost from './Cost'
-import SegmentExample from './Segment'
+import { Router, Scene } from 'react-native-router-flux'
+import MoneyContent from './MoneyRecord/MoneyContent';
+
 import Main from './Main'
-import CalcInput from './CalcInput'
-import Detail from './Detail'
+
+import CalcInput from './MoneyInput/CalcInput'
+
+import Detail from './MoneyRecord/Detail'
+import Expense from './MoneyRecord/Expense'
+import SegmentExample from './MoneyRecord/Segment'
+
 
 export default class App extends React.Component {
 
   render(){
     return (
       <Router uriPrefix={'localhost:8080/api'}>
-
-
           <Scene key="root">
 
-          <Scene
-              key="mainPage"
-              component={Main}
-              title= "태형이 가계부😍 메인"
-              initial
-              />
-
-          <Scene
-              key="calcInput"
-              component={CalcInput}
-              title= "태형이 가계부😍 - 입력"
-              />
-
-          <Scene
-              key="segment"
-              component={SegmentExample}
-              title= "태형이 가계부😍 - 보기"
-               />
-            
             <Scene
-              key="costmoney"
-              component={Cost}
-              title= "Cost"
+                key="mainPage"
+                component={Main}
+                title= "가계부😍 메인"
+                initial
+                />
+
+            <Scene
+                key="calcInput"
+                component={CalcInput}
+                title= "가계부😍 - 입력"
+                />
+
+            <Scene
+                key="segment"
+                component={SegmentExample}
+                title= "가계부😍 - 보기"
+                />
               
-               />
-            
-            <Scene
-              key="lostmoney"
-              component={LostMoney}
-              title= "LostMoney" 
-              />
+              <Scene
+                key="costmoney"
+                component={Expense}
+                title= "Expense"
+                
+                />
 
-            <Scene
-              key="detail"
-              path={"/list/:id"}
-              component={Detail}
-              title= "태형이 가계부😍 - 상세페이지" 
-              />
+              <Scene
+                key="detail"
+                path={"/list/:id"}
+                component={Detail}
+                title= "가계부😍 - 상세페이지" 
+                />
 
-              
-
-            </Scene>
-
-
-
+          </Scene>
         </Router>
     )
   }

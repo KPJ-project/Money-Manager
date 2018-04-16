@@ -3,11 +3,8 @@ import {StyleSheet, View, AsyncStorage} from 'react-native'
 import { Container,Title, Header, Left, Body, Right, Button, Icon, Segment, Content, Text } from 'native-base';
 import { Actions } from 'react-native-router-flux'
 
-import LostMoney from './LostMoney'
-import GetMoney from './GetMoney'
-import Cost from './Cost'
+import Expense from './Expense'
 import Income from './Income'
-
 
 
 export default class Stat extends Component{
@@ -15,7 +12,7 @@ export default class Stat extends Component{
         super(props);
         this.state = {
         };
-        }
+    }
         
     componentDidMount() {
         this._calResult();
@@ -44,7 +41,6 @@ export default class Stat extends Component{
                     잔액: {this.state.rest_val}       
                 </Text>
             </View>
-
         );
     }
 }

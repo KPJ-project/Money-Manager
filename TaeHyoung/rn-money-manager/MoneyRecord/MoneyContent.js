@@ -9,9 +9,6 @@ class MoneyContent extends React.Component {
 
 
     render () {
-        // let date = new Date();
-        // let now = date.toLocaleString()
-
 
         return (
             <View style={styles.container}>

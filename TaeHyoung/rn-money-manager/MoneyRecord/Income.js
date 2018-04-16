@@ -1,73 +1,71 @@
 import React from 'react'
 import { StyleSheet, Text, View, Alert,ScrollView, AsyncStorage } from 'react-native';
-import MoneyContent from './MoneyContent';
-
-import GetMoney from './GetMoney'
-import LostMoney from './LostMoney'
 import { Actions } from 'react-native-router-flux';
 import { Container, Header, Left, Body, Right,  Icon, Segment, Content,Button } from 'native-base';
 import MonthSelectorCalendar from 'react-native-month-selector';
 
+import MoneyContent from './MoneyContent';
+
 
 export default class Income extends React.Component {
 
-constructor(props) {
-  super(props);
-  this.state = {
-    datas: [],
-  };
-}
-
-componentDidMount() {
-  this.getListData()
-}
-
-getListData() {
-  return fetch('http://localhost:8080/api/list/income')
-    .then((response) => response.json())
-    .then((responseJson) => {
-
-      this.setState({
-        datas: responseJson,
-      });
-
-      return responseJson;
-      
-    }).catch((error) => {
-      console.error(error);
-    });
-}
-
-
-getListDataForMonth(month, year) {
-
-  var monthNumb = Number(month)+1
-
-  if(monthNumb == 13){
-    monthNumb = 1
+  constructor(props) {
+    super(props);
+    this.state = {
+      datas: [],
+    };
   }
 
-  var monthString = "0" + monthNumb.toString()
-  console.log(monthString);
-  return fetch('http://localhost:8080/api/list/income/'+monthString+"/"+year)
-    .then((response) => response.json())
-    .then((responseJson) => {
+  componentDidMount() {
+    this.getListData()
+  }
 
-      this.setState({
-        datas: responseJson,
+  getListData() {
+    return fetch('http://localhost:8080/api/list/income')
+      .then((response) => response.json())
+      .then((responseJson) => {
+
+        this.setState({
+          datas: responseJson,
+        });
+
+        return responseJson;
+        
+      }).catch((error) => {
+        console.error(error);
       });
+  }
 
-      console.log(this.state.datas);
-      return responseJson;
-      
-    }).catch((error) => {
-      console.error(error);
-    });
-}
 
-async _calIncome (result) {
-  await AsyncStorage.setItem("income", result.toString());
-}
+  getListDataForMonth(month, year) {
+
+    var monthNumb = Number(month)+1
+
+    if(monthNumb == 13){
+      monthNumb = 1
+    }
+
+    var monthString = "0" + monthNumb.toString()
+    console.log(monthString);
+    return fetch('http://localhost:8080/api/list/income/'+monthString+"/"+year)
+      .then((response) => response.json())
+      .then((responseJson) => {
+
+        this.setState({
+          datas: responseJson,
+        });
+
+        console.log(this.state.datas);
+        return responseJson;
+        
+      }).catch((error) => {
+        console.error(error);
+      });
+  }
+
+  async _calIncome (result) {
+    await AsyncStorage.setItem("income", result.toString());
+  }
 
 
   render() {
@@ -90,22 +88,21 @@ async _calIncome (result) {
                 img={receipt_img}
                 date={date}
                 />
-
         </View>     
-    );
-
-    })
+        );
+      })
 
     this._calIncome(result);
     
     
     return (
+
       <View style={styles.container}>
-      <Button style={[styles.topButtons]} full primary onPress={() => {this.getListData();}} >
-        <Text style={{color:"white",paddingLeft:10, paddingRight:10}}>
-            전체 리스트 보기
-        </Text>
-      </Button>
+        <Button style={[styles.topButtons]} full primary onPress={() => {this.getListData();}} >
+          <Text style={{color:"white",paddingLeft:10, paddingRight:10}}>
+              전체 리스트 보기
+          </Text>
+        </Button>
 
         <MonthSelectorCalendar
           style={styles.monthCalendar}
@@ -120,20 +117,16 @@ async _calIncome (result) {
             this.getListDataForMonth(mon,year);
            }}
         />  
-      <ScrollView style={styles.scroll} >
-        {details}
-      </ScrollView>
+        <ScrollView style={styles.scroll} >
+          {details}
+        </ScrollView>
 
-        {/* <Button title="Go lostmoney" onPress={()=>Actions.lostmoney()} />
-             */}
-        
-
-      <Text style={[styles.cost]}>수입 : {result}원</Text>
+        <Text style={[styles.cost]}>수입 : {result}원</Text>
       </View>
       );
   }
 }
-//<Text style={[styles.toptitle]}>{ cost_result }</Text>
+
 
 const styles = StyleSheet.create({
   container: {
