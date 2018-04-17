@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/btnChangeDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="날짜 대화상자"
+            android:onClick="btnChangeDateClicked"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <TextView
+                android:id="@+id/dateTv"
+                android:text="date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="18dp"
+                />
+            <EditText
+                android:id="@+id/dateEv"
+                android:hint="input date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_below="@id/dateTv"
+                android:paddingLeft="12dp" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="14dp"
+            >
+            <TextView
+                android:id="@+id/categoryTv"
+                android:text="category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="18dp"
+                />
+            <EditText
+                android:id="@+id/categoryEv"
+                android:hint="input category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_below="@id/categoryTv"
+                android:paddingLeft="12dp" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="14dp"
+            >
+            <TextView
+                android:id="@+id/contentsTv"
+                android:text="contents"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="18dp"
+                />
+            <EditText
+                android:id="@+id/contentsEv"
+                android:hint="input contents"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_below="@id/contentsTv"
+                android:paddingLeft="12dp" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="14dp"
+            >
+            <TextView
+                android:id="@+id/priceTv"
+                android:text="price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="18dp"
+                />
+            <EditText
+                android:id="@+id/priceEv"
+                android:hint="input price"
+                android:inputType="number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_below="@id/priceTv"
+                android:paddingLeft="12dp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="14dp"
+            >
+            <TextView
+                android:id="@+id/etcTv"
+                android:text="etc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="18dp"
+                />
+            <EditText
+                android:id="@+id/etcEv"
+                android:hint="input etc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_below="@id/etcTv"
+                android:paddingLeft="12dp" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="10dp"
+            >
+            <Button
+                android:id="@+id/changeBtn"
+                android:text="change"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginRight="20dp"
+                android:onClick="changeBtnClicked"
+                />
+            <Button
+                android:id="@+id/deleteBtn"
+                android:text="delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="deleteBtnClicked"
+                />
+
+        </LinearLayout>
+        <TextView
+            android:id="@+id/receiptTv"
+            android:text="image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="18dp"
+            />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/receiptView"/>
+
+    </LinearLayout>
+
+
+
+
+</ScrollView>
