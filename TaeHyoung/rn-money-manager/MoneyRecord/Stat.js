@@ -1,44 +1,44 @@
 import React, { Component } from 'react';
-import {StyleSheet, View, AsyncStorage} from 'react-native'
-import { Container,Title, Header, Left, Body, Right, Button, Icon, Segment, Content, Text } from 'native-base';
+import { StyleSheet, View, AsyncStorage } from 'react-native'
+import { Container, Title, Header, Left, Body, Right, Button, Icon, Segment, Content, Text } from 'native-base';
 import { Actions } from 'react-native-router-flux'
 
 import Expense from './Expense'
 import Income from './Income'
 
 
-export default class Stat extends Component{
+export default class Stat extends Component {
     constructor(props) {
         super(props);
         this.state = {
         };
     }
-        
+
     componentDidMount() {
         this._calResult();
     }
 
     async _calResult() {
-        try{
+        try {
             let cost_val = await AsyncStorage.getItem("cost");
             let income_val = await AsyncStorage.getItem("income");
 
             console.log(cost_val);
 
-            this.setState({rest_val:Number(income_val) - Number(cost_val)})
-           
+            this.setState({ rest_val: Number(income_val) - Number(cost_val) })
+
         }
-        catch (error){
+        catch (error) {
             console.log(error);
         }
-        
+
     }
-    render(){
-        
-        return(
+    render() {
+
+        return (
             <View style={[styles.container]}>
                 <Text style={[styles.welcome]}>
-                    잔액: {this.state.rest_val}       
+                    잔액: {this.state.rest_val}
                 </Text>
             </View>
         );

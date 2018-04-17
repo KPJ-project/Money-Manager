@@ -1,12 +1,12 @@
 import React from 'react';
-import { StyleSheet, Text, View, Alert,ScrollView  } from 'react-native';
+import { StyleSheet, Text, View, Alert, ScrollView } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { Button } from 'native-base';
 
 import MoneyContent from '../MoneyRecord/MoneyContent';
 
 
-export default class Main extends React.Component{
+export default class Main extends React.Component {
 
     componentDidMount() {
         setTimeout(
@@ -17,8 +17,8 @@ export default class Main extends React.Component{
         );
     }
 
-    render(){
-        return(
+    render() {
+        return (
 
             <View style={[styles.container]}>
                 <View style={[styles.upper]}>
@@ -32,13 +32,13 @@ export default class Main extends React.Component{
                 </View>
 
                 <View style={[styles.buttonGroups]}>
-                    <Button style={[styles.topButton]} primary onPress={()=>{Actions.segment()}}>
-                        <Text style={{fontSize:20, fontWeight:"bold", color:"white", paddingHorizontal:10}}>가계부 보기</Text>
+                    <Button style={[styles.topButton]} primary onPress={() => { Actions.segment() }}>
+                        <Text style={{ fontSize: 20, fontWeight: "bold", color: "white", paddingHorizontal: 10 }}>가계부 보기</Text>
                     </Button>
 
-                    <Button style={[styles.bottomButton]} primary onPress={()=>{Actions.calcInput()}}>
-                        <Text style={{fontSize:20, fontWeight:"bold", color:"white", paddingHorizontal:10}}>가계부 입력</Text>
-                    </Button>                    
+                    <Button style={[styles.bottomButton]} primary onPress={() => { Actions.calcInput() }}>
+                        <Text style={{ fontSize: 20, fontWeight: "bold", color: "white", paddingHorizontal: 10 }}>가계부 입력</Text>
+                    </Button>
                 </View>
             </View>
 
@@ -60,20 +60,19 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: 'center',
     },
-    bigTitle:{
+    bigTitle: {
         fontSize: 50,
         fontWeight: "bold",
-        color:"white",
+        color: "white",
     },
     buttonGroups: {
-        flex:1,
+        flex: 1,
     },
-    topButton:{
-        marginBottom:10
+    topButton: {
+        marginBottom: 10
     },
-    bottomButton:{
-        marginTop:10
+    bottomButton: {
+        marginTop: 10
     }
-        
-  });
-  
+
+});

@@ -8,12 +8,12 @@ class MoneyContent extends React.Component {
 
 
 
-    render () {
+    render() {
 
         return (
             <View style={styles.container}>
                 <View style={styles.contentsPart1}>
-                    <Text style={[styles.index]}>{(this.props.num)+ ". "}</Text>
+                    <Text style={[styles.index]}>{(this.props.num) + ". "}</Text>
                     <Text style={[styles.category]}>{(this.props.category || 'Contents')}</Text>
                     <View style={[styles.pricepart]}>
                         <View>
@@ -31,23 +31,24 @@ class MoneyContent extends React.Component {
                     </View>
                     {/* <Text style={[styles.rank]}>{(this.props.etc || 'Contents')}</Text> */}
                     <View style={styles.rightButton}>
-                    <Button danger iconRight onPress={() => {
-                        Actions.detail({ id: this.props.id, img: this.props.img })}}>
-                        <Text style={{color:"white",paddingLeft:10, paddingRight:10}}>
-                            보기
+                        <Button danger iconRight onPress={() => {
+                            Actions.detail({ id: this.props.id, img: this.props.img })
+                        }}>
+                            <Text style={{ color: "white", paddingLeft: 10, paddingRight: 10 }}>
+                                보기
                         </Text>
-                    </Button>
+                        </Button>
                     </View>
                 </View>
 
                 <View style={styles.contentsPart2}>
                     <Text>
-                     {this.props.date.split("T")[0]}
+                        {this.props.date.split("T")[0]}
                     </Text>
-                    
+
                 </View>
             </View>
-            
+
         )
     }
 }
@@ -56,7 +57,7 @@ class MoneyContent extends React.Component {
 
 const styles = StyleSheet.create({
 
-    container:{
+    container: {
         borderBottomColor: '#bbb',
         borderBottomWidth: 1,
         marginTop: 5,
@@ -71,10 +72,10 @@ const styles = StyleSheet.create({
     },
     contentsPart2: {
         alignItems: 'flex-end',
-        paddingBottom:10,
+        paddingBottom: 10,
     },
     index: {
-        marginRight:10,
+        marginRight: 10,
     },
     pricepart: {
         marginLeft: 20,
@@ -104,8 +105,8 @@ const styles = StyleSheet.create({
         marginRight: 15,
     },
     rightButton: {
-        alignItems:"flex-end"
-    } 
+        alignItems: "flex-end"
+    }
 });
 
 export default MoneyContent;

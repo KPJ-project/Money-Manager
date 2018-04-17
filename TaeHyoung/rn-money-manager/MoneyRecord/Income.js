@@ -1,7 +1,7 @@
 import React from 'react'
-import { StyleSheet, Text, View, Alert,ScrollView, AsyncStorage } from 'react-native';
+import { StyleSheet, Text, View, Alert, ScrollView, AsyncStorage } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import { Container, Header, Left, Body, Right,  Icon, Segment, Content,Button } from 'native-base';
+import { Container, Header, Left, Body, Right, Icon, Segment, Content, Button } from 'native-base';
 import MonthSelectorCalendar from 'react-native-month-selector';
 
 import MoneyContent from './MoneyContent';
@@ -21,7 +21,8 @@ export default class Income extends React.Component {
   }
 
   getListData() {
-    return fetch('http://localhost:8080/api/list/income')
+    console.log("kwontaehyoung")
+    return fetch('http://192.168.200.128:8080/api/list/income')
       .then((response) => response.json())
       .then((responseJson) => {
 
@@ -30,7 +31,7 @@ export default class Income extends React.Component {
         });
 
         return responseJson;
-        
+
       }).catch((error) => {
         console.error(error);
       });
@@ -39,15 +40,15 @@ export default class Income extends React.Component {
 
   getListDataForMonth(month, year) {
 
-    var monthNumb = Number(month)+1
+    var monthNumb = Number(month) + 1
 
-    if(monthNumb == 13){
+    if (monthNumb == 13) {
       monthNumb = 1
     }
 
     var monthString = "0" + monthNumb.toString()
     console.log(monthString);
-    return fetch('http://localhost:8080/api/list/income/'+monthString+"/"+year)
+    return fetch('http://192.168.200.128:8080/api/list/income/' + monthString + "/" + year)
       .then((response) => response.json())
       .then((responseJson) => {
 
@@ -57,50 +58,50 @@ export default class Income extends React.Component {
 
         console.log(this.state.datas);
         return responseJson;
-        
+
       }).catch((error) => {
         console.error(error);
       });
   }
 
-  async _calIncome (result) {
+  async _calIncome(result) {
     await AsyncStorage.setItem("income", result.toString());
   }
 
 
   render() {
-    
+
     let result = 0;
     let details = this.state.datas.map((data, index) => {
-      const {date, _id, category, contents, price, etc, cc, receipt_img} = data;
+      const { date, _id, category, contents, price, etc, cc, receipt_img } = data;
       console.log(index);
       result = result + price
 
       return (
         <View>
-            <MoneyContent
-                id={_id}
-                num={index + 1}
-                contents={contents}
-                price={price} 
-                etc={etc}
-                category={category}
-                img={receipt_img}
-                date={date}
-                />
-        </View>     
-        );
-      })
+          <MoneyContent
+            id={_id}
+            num={index + 1}
+            contents={contents}
+            price={price}
+            etc={etc}
+            category={category}
+            img={receipt_img}
+            date={date}
+          />
+        </View>
+      );
+    })
 
     this._calIncome(result);
-    
-    
+
+
     return (
 
       <View style={styles.container}>
-        <Button style={[styles.topButtons]} full primary onPress={() => {this.getListData();}} >
-          <Text style={{color:"white",paddingLeft:10, paddingRight:10}}>
-              전체 리스트 보기
+        <Button style={[styles.topButtons]} full primary onPress={() => { this.getListData(); }} >
+          <Text style={{ color: "white", paddingLeft: 10, paddingRight: 10 }}>
+            전체 리스트 보기
           </Text>
         </Button>
 
@@ -114,16 +115,16 @@ export default class Income extends React.Component {
             var mon = date.toISOString().split("T")[0].split("-")[1]
             var year = date.toISOString().split("T")[0].split("-")[0]
 
-            this.getListDataForMonth(mon,year);
-           }}
-        />  
+            this.getListDataForMonth(mon, year);
+          }}
+        />
         <ScrollView style={styles.scroll} >
           {details}
         </ScrollView>
 
         <Text style={[styles.cost]}>수입 : {result}원</Text>
       </View>
-      );
+    );
   }
 }
 
@@ -136,13 +137,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   toptitle: {
-    marginTop:100,
-    marginBottom:50,
-    fontSize:40
-},
-cost: {
-  marginTop:30,
-  marginBottom:50,
-  fontSize:40,
-}
+    marginTop: 100,
+    marginBottom: 50,
+    fontSize: 40
+  },
+  cost: {
+    marginTop: 30,
+    marginBottom: 50,
+    fontSize: 40,
+  }
 });
