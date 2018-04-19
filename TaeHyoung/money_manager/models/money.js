@@ -8,7 +8,7 @@ var MoneyManagerSchema = new Schema({
     price: Number,
     etc: String,
     cc: Boolean,
-    receipt_img: String,
+    receipt_img: {type: String, required:false},
     cost: Boolean,
 });
 

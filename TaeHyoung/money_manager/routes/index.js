@@ -20,7 +20,7 @@ module.exports = function(app, MoneyManager){
 
     // GET ALL List
     app.get('/api/list', function(req, res){
-        MoneyManager.find(function(err, records){
+        MoneyManager.find.sort({"date": -1}, function(err, records){
             if(err){
                 return res.status(500).send({error: 'database fail'});
             }
@@ -142,7 +142,7 @@ module.exports = function(app, MoneyManager){
         money.price = req.body.price;
         money.etc = req.body.etc;
         money.cc = req.body.cc;
-        money.receipt_img = req.file.path;
+        //money.receipt_img = req.file.path;
         money.cost = req.body.cost;
 
         money.save(function(err){
