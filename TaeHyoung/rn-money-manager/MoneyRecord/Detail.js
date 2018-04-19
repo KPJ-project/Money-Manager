@@ -20,7 +20,7 @@ export default class Detail extends React.Component {
     }
 
     getListData() {
-        return fetch('http://192.168.200.128:8080/api/list/' + this.props.id)
+        return fetch('http://127.0.0.1:8080/api/list/' + this.props.id)
             .then((response) => response.json())
             .then((responseJson) => {
 
@@ -40,7 +40,7 @@ export default class Detail extends React.Component {
     }
 
     getDelete() {
-        return fetch('http://192.168.200.128:8080/api/delete/' + this.props.id, { "method": "delete" })
+        return fetch('http://127.0.0.1:8080/api/delete/' + this.props.id, { "method": "delete" })
             .then((response) => console.log(response))
             .then((responseJson) => {
 
@@ -59,7 +59,7 @@ export default class Detail extends React.Component {
             <View style={styles.container}>
 
                 <View style={styles.image}>
-                    <Image style={{ width: 200, height: 200 }} source={{ uri: 'http://192.168.200.128:8080/image/house@2x.png' }} />
+                    <Image style={{ width: 200, height: 200 }} source={{ uri: 'http://127.0.0.1:8080/image/house@2x.png' }} />
 
                 </View>
 

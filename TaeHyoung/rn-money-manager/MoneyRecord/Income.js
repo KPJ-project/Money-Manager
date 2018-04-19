@@ -22,7 +22,7 @@ export default class Income extends React.Component {
 
   getListData() {
     console.log("kwontaehyoung")
-    return fetch('http://192.168.200.128:8080/api/list/income')
+    return fetch('http://127.0.0.1:8080/api/list/income')
       .then((response) => response.json())
       .then((responseJson) => {
 
@@ -48,7 +48,7 @@ export default class Income extends React.Component {
 
     var monthString = "0" + monthNumb.toString()
     console.log(monthString);
-    return fetch('http://192.168.200.128:8080/api/list/income/' + monthString + "/" + year)
+    return fetch('http://127.0.0.1:8080/api/list/income/' + monthString + "/" + year)
       .then((response) => response.json())
       .then((responseJson) => {
 
