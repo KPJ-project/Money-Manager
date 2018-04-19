@@ -21,15 +21,24 @@ module.exports = function(app, Housekeepingbook) {
         })
     });
 
+    // GET SINGLE DATA
+    app.get('/api/data/:data_id', function(req,res){
+        Housekeepingbook.findOne({_id: req.params.data_id}, function(err, housekeepingbook){
+            if(err) return res.status(500).json({error: err});
+            if(!housekeepingbook) return res.status(404).json({error: 'housekeepingbook not found'});
+            res.json(housekeepingbook);
+        })
+    });
+
     // CREATE DATA
     app.post('/api/create', upload.single('receipt'), function(req,res){
         var housekeepingbook = new Housekeepingbook();
-        housekeepingbook.date = Date.now();
+        housekeepingbook.date = req.body.date;
         housekeepingbook.category = req.body.category;
         housekeepingbook.contents = req.body.contents;
         housekeepingbook.price = req.body.price;
         housekeepingbook.etc = req.body.etc;
-        housekeepingbook.receipt = req.file.filename;
+        if(req.file) housekeepingbook.receipt = req.file.filename;
 
         housekeepingbook.save(function(err){
             if(err){
@@ -44,11 +53,12 @@ module.exports = function(app, Housekeepingbook) {
 
 
     // UPDATE DATA
-    app.put('/api/update/:housekeepingbook_id', function(req, res){
+    app.post('/api/update/:housekeepingbook_id', function(req, res){
         Housekeepingbook.findById(req.params.housekeepingbook_id, function(err, housekeepingbook){
             if(err) return res.status(500).json({ error: 'database failure' });
             if(!housekeepingbook) return res.status(404).json({ error: 'housekeepingbook not found' });
     
+            if(req.body.date) housekeepingbook.date = req.body.date;
             if(req.body.category) housekeepingbook.category = req.body.category;
             if(req.body.contents) housekeepingbook.contents = req.body.contents;
             if(req.body.price) housekeepingbook.price = req.body.price;

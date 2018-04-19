@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var housekeepingbookSchema = new Schema({
-    date: { type: Date, default: Date.now },
+    date: { type: Date },
     category: String,
     contents: String,
     price: Number,
