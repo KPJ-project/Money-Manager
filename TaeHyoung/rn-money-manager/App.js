@@ -5,6 +5,7 @@ import { Router, Scene, Lightbox } from 'react-native-router-flux'
 import MoneyContent from './MoneyRecord/MoneyContent';
 
 import Main from './MainScreen/Main'
+import Loading from './MainScreen/Loading'
 import loginLightbox from './MainScreen/loginLightbox'
 
 import CalcInput from './MoneyInput/CalcInput'
@@ -33,11 +34,17 @@ export default class App extends React.Component {
         <Lightbox>
             <Scene key="root">
 
+            <Scene
+                  key="loading"
+                  component={Loading}
+                  title= "로딩"
+                  initial
+                  />
+
               <Scene
                   key="mainPage"
                   component={Main}
                   title= "가계부😍 메인"
-                  initial
                   />
 
               <Scene
