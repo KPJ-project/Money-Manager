@@ -6,15 +6,19 @@ import { Actions } from 'react-native-router-flux'
 import Expense from './Expense'
 import Income from './Income'
 
+import Loader from '../Loader/Loader'
+
 
 export default class Stat extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            isIndicator: true
         };
     }
 
     componentDidMount() {
+        setTimeout(() => this.setState({ isIndicator: false}),1500)
         this._calResult();
     }
 
@@ -37,6 +41,7 @@ export default class Stat extends Component {
 
         return (
             <View style={[styles.container]}>
+                <Loader loading={this.state.isIndicator} />
                 <Text style={[styles.welcome]}>
                     잔액: {this.state.rest_val}
                 </Text>

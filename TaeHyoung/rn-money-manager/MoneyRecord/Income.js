@@ -1,10 +1,11 @@
 import React from 'react'
-import { StyleSheet, Text, View, Alert, ScrollView, AsyncStorage } from 'react-native';
+import { StyleSheet, Text, View, Alert, ScrollView, AsyncStorage, ActivityIndicato,Modal } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { Container, Header, Left, Body, Right, Icon, Segment, Content, Button } from 'native-base';
 import MonthSelectorCalendar from 'react-native-month-selector';
 
 import MoneyContent from './MoneyContent';
+import Loader from '../Loader/Loader'
 
 
 export default class Income extends React.Component {
@@ -13,10 +14,12 @@ export default class Income extends React.Component {
     super(props);
     this.state = {
       datas: [],
+      isIndicator: true
     };
   }
 
   componentDidMount() {
+    setTimeout(() => this.setState({ isIndicator: false}),1500)
     this.getListData()
   }
 
@@ -99,6 +102,7 @@ export default class Income extends React.Component {
     return (
 
       <View style={styles.container}>
+        <Loader loading={this.state.isIndicator} />
         <Button style={[styles.topButtons]} full primary onPress={() => { this.getListData(); }} >
           <Text style={{ color: "white", paddingLeft: 10, paddingRight: 10 }}>
             전체 리스트 보기
@@ -118,6 +122,7 @@ export default class Income extends React.Component {
             this.getListDataForMonth(mon, year);
           }}
         />
+        
         <ScrollView style={styles.scroll} >
           {details}
         </ScrollView>
@@ -145,5 +150,11 @@ const styles = StyleSheet.create({
     marginTop: 30,
     marginBottom: 50,
     fontSize: 40,
-  }
+  },
+  activityIndicator: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 80
+ }
 });

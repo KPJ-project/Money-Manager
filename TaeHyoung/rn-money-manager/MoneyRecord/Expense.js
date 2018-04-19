@@ -5,6 +5,7 @@ import MonthSelectorCalendar from 'react-native-month-selector';
 import { Actions } from 'react-native-router-flux';
 
 import MoneyContent from './MoneyContent';
+import Loader from '../Loader/Loader'
 
 
 export default class Expense extends React.Component {
@@ -17,17 +18,14 @@ export default class Expense extends React.Component {
 
     this.state = {
       datas: [],
-      chosenDate: new Date(),
+      isIndicator: true
     };
   }
 
   componentDidMount() {
+    setTimeout(() => this.setState({ isIndicator: false}),1500)
     this.getListData()
 
-  }
-
-  setDate(newDate) {
-    this.setState({ chosenDate: newDate })
   }
 
   getListData() {
@@ -106,6 +104,7 @@ export default class Expense extends React.Component {
     return (
 
       <View style={styles.container}>
+        <Loader loading={this.state.isIndicator} />
         <Button style={[styles.topButtons]} full primary onPress={() => { this.getListData(); }} >
           <Text style={{ color: "white", paddingLeft: 10, paddingRight: 10 }}>
             전체 리스트 보기

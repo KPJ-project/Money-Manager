@@ -32,12 +32,12 @@ export default class Loading extends Component {
             // Change from 0 to 1 to run animation
             toValue: 1,
             // Animation duration
-            duration: 2400, // higher the value slower the animation and vice versa
+            duration: 2000, // higher the value slower the animation and vice versa
             // Linear easings
           }),
         ]),
         {
-          iterations: 2
+          iterations: 1
         }
       ).start(() => {
       // Reset progress to zero after animation is done

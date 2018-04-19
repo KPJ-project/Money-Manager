@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Alert, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Alert, ScrollView, ActivityIndicator } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { Button } from 'native-base';
 
@@ -7,6 +7,8 @@ import MoneyContent from '../MoneyRecord/MoneyContent';
 
 
 export default class Main extends React.Component {
+
+
 
     componentDidMount() {
         setTimeout(
@@ -19,8 +21,9 @@ export default class Main extends React.Component {
 
     render() {
         return (
-
+        
             <View style={[styles.container]}>
+                
                 <View style={[styles.upper]}>
                     <Text style={[styles.bigTitle]}>
                         Money
@@ -29,6 +32,7 @@ export default class Main extends React.Component {
                     <Text style={[styles.bigTitle]}>
                         Management
                     </Text>
+                    
                 </View>
 
                 <View style={[styles.buttonGroups]}>
