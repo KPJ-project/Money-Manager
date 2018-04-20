@@ -83,9 +83,8 @@ export default class Expense extends React.Component {
       result = result + price
 
       return (
-        <View>
           <MoneyContent
-            id={_id}
+            key={_id}
             num={index + 1}
             contents={contents}
             price={price}
@@ -94,8 +93,6 @@ export default class Expense extends React.Component {
             img={receipt_img}
             date={date}
           />
-
-        </View>
       );
     })
 

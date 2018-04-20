@@ -32,7 +32,7 @@ class MoneyContent extends React.Component {
                     {/* <Text style={[styles.rank]}>{(this.props.etc || 'Contents')}</Text> */}
                     <View style={styles.rightButton}>
                         <Button danger iconRight onPress={() => {
-                            Actions.detail({ id: this.props.id, img: this.props.img })
+                            Actions.detail({ key: this.props.key, img: this.props.img })
                         }}>
                             <Text style={{ color: "white", paddingLeft: 10, paddingRight: 10 }}>
                                 보기
@@ -75,6 +75,7 @@ const styles = StyleSheet.create({
     contentsPart2: {
         alignItems: 'flex-end',
         paddingBottom: 10,
+        marginRight:20
     },
     index: {
         marginRight: 10,
