@@ -15,7 +15,7 @@ bodyparser는 바디를 파싱하여서, req.body 객체로 접근할 수 있도
 */
 
 //미들웨어
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use('/image', express.static('uploads'));
 
@@ -32,18 +32,18 @@ var router = require('./routes')(app, MoneyManager)
 var db = mongoose.connection;
 
 db.on('error', console.error);
-db.once('open', function(){
+db.once('open', function () {
     console.log("Connected to mongod server");
 });
 
-mongoose.connect('mongodb://localhost/money_manager', function(err){
-    if (err){
+mongoose.connect('mongodb://localhost/money_manager', function (err) {
+    if (err) {
         console.error('mongodb connection error', err);
     }
     console.log('mongodb connected');
 });
 
 
-app.listen(port, function(){
-    console.log('Connected'+ port + 'port!');
+app.listen(port, function () {
+    console.log('Connected' + port + 'port!');
 });

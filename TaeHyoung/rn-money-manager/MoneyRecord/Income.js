@@ -77,7 +77,7 @@ export default class Income extends React.Component {
     let result = 0;
     let details = this.state.datas.map((data, index) => {
       const { date, _id, category, contents, price, etc, cc, receipt_img } = data;
-      console.log(index);
+
       result = result + price
 
       return (
