@@ -23,7 +23,7 @@ export default class Expense extends React.Component {
   }
 
   componentDidMount() {
-    setTimeout(() => this.setState({ isIndicator: false}),1500)
+    setTimeout(() => this.setState({ isIndicator: false }), 1500)
     this.getListData()
 
   }

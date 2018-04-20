@@ -25,59 +25,59 @@ export default class Loading extends Component {
     this.animate();
   }
 
-  animate = () => {   
+  animate = () => {
     Animated.loop(
-        Animated.sequence([
-          Animated.timing(this.state.progress,{
-            // Change from 0 to 1 to run animation
-            toValue: 1,
-            // Animation duration
-            duration: 2000, // higher the value slower the animation and vice versa
-            // Linear easings
-          }),
-        ]),
-        {
-          iterations: 1
-        }
-      ).start(() => {
+      Animated.sequence([
+        Animated.timing(this.state.progress, {
+          // Change from 0 to 1 to run animation
+          toValue: 1,
+          // Animation duration
+          duration: 2000, // higher the value slower the animation and vice versa
+          // Linear easings
+        }),
+      ]),
+      {
+        iterations: 1
+      }
+    ).start(() => {
       // Reset progress to zero after animation is done
       //this.state.progress.setValue(0);
       // Animate again
       Actions.mainPage();
-     
+
     });
   }
 
   render() {
     return (
-    <View style={styles.container}>
-      <Animation
-        // Load animation from json file
-        source={require('../lottie/loading...json')}
-        // Animate json file
-        progress={this.state.progress}
-      />    
-      
-    <Text style={[styles.bigTitle]}>
-        로딩 중..
+      <View style={styles.container}>
+        <Animation
+          // Load animation from json file
+          source={require('../lottie/loading...json')}
+          // Animate json file
+          progress={this.state.progress}
+        />
+
+        <Text style={[styles.bigTitle]}>
+          로딩 중..
     </Text>
-    </View>
+      </View>
     );
-}
+  }
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center', //자식 뷰 컴포넌트 간격에 영향을 준다.
-        alignItems: 'center',
-        backgroundColor: '#f23e3e',
-        //backgroundColor:'#fff'
-    },
+  container: {
+    flex: 1,
+    justifyContent: 'center', //자식 뷰 컴포넌트 간격에 영향을 준다.
+    alignItems: 'center',
+    backgroundColor: '#f23e3e',
+    //backgroundColor:'#fff'
+  },
 
-    bigTitle: {
-        fontSize: 20,
-        fontWeight: "bold",
-        color: "white",
-    },
+  bigTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "white",
+  },
 });

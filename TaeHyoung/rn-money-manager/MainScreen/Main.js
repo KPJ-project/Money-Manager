@@ -21,9 +21,9 @@ export default class Main extends React.Component {
 
     render() {
         return (
-        
+
             <View style={[styles.container]}>
-                
+
                 <View style={[styles.upper]}>
                     <Text style={[styles.bigTitle]}>
                         Money
@@ -32,7 +32,7 @@ export default class Main extends React.Component {
                     <Text style={[styles.bigTitle]}>
                         Management
                     </Text>
-                    
+
                 </View>
 
                 <View style={[styles.buttonGroups]}>

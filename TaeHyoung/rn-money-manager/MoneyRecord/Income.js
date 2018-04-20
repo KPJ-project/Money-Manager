@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View, Alert, ScrollView, AsyncStorage, ActivityIndicato,Modal } from 'react-native';
+import { StyleSheet, Text, View, Alert, ScrollView, AsyncStorage, ActivityIndicato, Modal } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { Container, Header, Left, Body, Right, Icon, Segment, Content, Button } from 'native-base';
 import MonthSelectorCalendar from 'react-native-month-selector';
@@ -19,7 +19,7 @@ export default class Income extends React.Component {
   }
 
   componentDidMount() {
-    setTimeout(() => this.setState({ isIndicator: false}),1500)
+    setTimeout(() => this.setState({ isIndicator: false }), 1500)
     this.getListData()
   }
 
@@ -122,7 +122,7 @@ export default class Income extends React.Component {
             this.getListDataForMonth(mon, year);
           }}
         />
-        
+
         <ScrollView style={styles.scroll} >
           {details}
         </ScrollView>
@@ -156,5 +156,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     height: 80
- }
+  }
 });

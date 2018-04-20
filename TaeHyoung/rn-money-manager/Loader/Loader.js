@@ -22,8 +22,7 @@ return (
 
         <View style={styles.modalBackground}>
             <View style={styles.activityIndicatorWrapper}>
-                <ActivityIndicator
-                    animating={loading} />
+                <ActivityIndicator animating={loading} />
             </View>
         </View>
     

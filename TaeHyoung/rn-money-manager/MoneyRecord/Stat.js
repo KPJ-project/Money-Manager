@@ -18,7 +18,7 @@ export default class Stat extends Component {
     }
 
     componentDidMount() {
-        setTimeout(() => this.setState({ isIndicator: false}),1500)
+        setTimeout(() => this.setState({ isIndicator: false }), 1500)
         this._calResult();
     }
 

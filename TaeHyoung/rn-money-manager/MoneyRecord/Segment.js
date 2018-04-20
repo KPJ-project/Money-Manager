@@ -46,7 +46,7 @@ export default class SegmentExample extends Component {
           </Button>
 
         </Segment>
-        
+
         <Content padder>
           {this.state.activeButton === 'first' ? <Income /> :
             this.state.activeButton === 'second' ? <Expense /> : <Stat />}
