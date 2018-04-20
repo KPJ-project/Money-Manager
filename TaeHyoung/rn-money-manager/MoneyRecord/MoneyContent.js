@@ -62,6 +62,7 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         marginTop: 5,
         marginBottom: 5,
+
     },
     contentsPart1: {
         width: '100%',
@@ -69,6 +70,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         backgroundColor: 'white',
         alignItems: 'center',
+        justifyContent: 'space-evenly',
     },
     contentsPart2: {
         alignItems: 'flex-end',
@@ -105,7 +107,8 @@ const styles = StyleSheet.create({
         marginRight: 15,
     },
     rightButton: {
-        alignItems: "flex-end"
+        alignItems: "flex-end",
+        justifyContent:"flex-end"
     }
 });
 
