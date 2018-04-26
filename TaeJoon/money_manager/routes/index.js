@@ -15,7 +15,7 @@ var upload = multer({ storage: _storage })
 module.exports = function(app, Housekeepingbook) {
     // GET ALL DATA
     app.get('/api/data', function(req,res){
-        Housekeepingbook.find(function(err, housekeepingbooks){
+        Housekeepingbook.find({}).sort({date:-1}).exec(function(err, housekeepingbooks){
             if(err) return res.status(500).send({error: 'database failure'});
             res.json(housekeepingbooks);
         })
@@ -30,6 +30,32 @@ module.exports = function(app, Housekeepingbook) {
         })
     });
 
+    // GET MONTH DATA (INCOME)
+    app.get('/api/income/:year/:month', function(req,res){
+        Housekeepingbook.find({ year: req.params.year, 
+                                month: req.params.month,
+                                income: "true"
+                            }).sort({ date: -1
+                            }).exec(function(err, housekeepingbooks){
+                                if(err) return res.status(500).send({error: 'database failure'});
+                                res.json(housekeepingbooks);
+                            })
+
+    });
+
+    // GET MONTH DATA (expense)
+    app.get('/api/expense/:year/:month', function(req,res){
+        Housekeepingbook.find({ year: req.params.year, 
+                                month: req.params.month,
+                                income: "false"
+                            }).sort({ date: -1
+                            }).exec(function(err, housekeepingbooks){
+                                if(err) return res.status(500).send({error: 'database failure'});
+                                res.json(housekeepingbooks);
+                            })
+
+    });
+
     // CREATE DATA
     app.post('/api/create', upload.single('receipt'), function(req,res){
         var housekeepingbook = new Housekeepingbook();
@@ -38,6 +64,9 @@ module.exports = function(app, Housekeepingbook) {
         housekeepingbook.contents = req.body.contents;
         housekeepingbook.price = req.body.price;
         housekeepingbook.etc = req.body.etc;
+        housekeepingbook.income = req.body.income;
+        housekeepingbook.year = req.body.date.substring(0,4);
+        housekeepingbook.month = req.body.date.substring(5,7);
         if(req.file) housekeepingbook.receipt = req.file.filename;
 
         housekeepingbook.save(function(err){
@@ -63,6 +92,7 @@ module.exports = function(app, Housekeepingbook) {
             if(req.body.contents) housekeepingbook.contents = req.body.contents;
             if(req.body.price) housekeepingbook.price = req.body.price;
             if(req.body.etc) housekeepingbook.etc = req.body.etc;
+            if(req.body.income) housekeepingbook.income = req.body.income;
 
             housekeepingbook.save(function(err){
                 if(err) res.status(500).json({error: 'failed to update'});

@@ -1,10 +1,13 @@
 package org.techtown.moneymanager;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import java.text.NumberFormat;
 
 public class MoneyItemView extends LinearLayout {
 
@@ -23,6 +26,7 @@ public class MoneyItemView extends LinearLayout {
         super(context, attrs);
         init(context);
     }
+
 
     private void init(Context context) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -51,7 +55,16 @@ public class MoneyItemView extends LinearLayout {
         tv_contents.setText(contents);
     }
 
-    public void setPrice(int price){
-        tv_price.setText(String.valueOf(price));
+    public void setPrice(int price, boolean income){
+        NumberFormat nf = NumberFormat.getInstance();
+        tv_price.setText(nf.format(price) + "원");
+        //tv_price.setText(String.valueOf(price) + "원");
+        if (income==true){
+            tv_price.setTextColor(Color.parseColor("#0000FF"));
+        }
+        else{
+            tv_price.setTextColor(Color.parseColor("#FF0000"));
+        }
+
     }
 }

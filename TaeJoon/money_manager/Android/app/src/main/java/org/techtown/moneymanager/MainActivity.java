@@ -1,91 +1,131 @@
 package org.techtown.moneymanager;
 
-import android.content.Intent;
-import android.os.Handler;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.EditText;
-import android.widget.ListView;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
 public class MainActivity extends AppCompatActivity {
+
+    ViewPager vp;
+    LinearLayout ll;
     String TAG = "######################MainActivity";
-
-    EditText editText;
-    TextView textView;
-
-    Handler handler = new Handler();
-
-    ListView listView;
-    MoneyAdapter adapter;
-    ArrayList<MoneyItem> items = new ArrayList<MoneyItem>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Log.i(TAG,"onCreate");
+        setContentView(R.layout.fragment_activity_main);
 
-        textView = (TextView) findViewById(R.id.textView);
+        vp = (ViewPager)findViewById(R.id.vp);
+        ll = (LinearLayout)findViewById(R.id.ll);
+        TextView tab_day = (TextView)findViewById(R.id.tab_day);
+        TextView tab_week = (TextView)findViewById(R.id.tab_week);
+        TextView tab_month = (TextView)findViewById(R.id.tab_month);
+        TextView tab_statistics = (TextView)findViewById(R.id.tab_statistics);
 
-        listView = (ListView) findViewById(R.id.listView);
+        vp.setAdapter(new pagerAdapter(getSupportFragmentManager()));
+        vp.setOffscreenPageLimit(3);
+        vp.setCurrentItem(0);
 
+        tab_day.setOnClickListener(movePageListener);
+        tab_day.setTag(0);
+        tab_week.setOnClickListener(movePageListener);
+        tab_week.setTag(1);
+        tab_month.setOnClickListener(movePageListener);
+        tab_month.setTag(2);
+        tab_statistics.setOnClickListener(movePageListener);
+        tab_statistics.setTag(3);
 
-        String url = "http://192.168.56.1:8080/api/data";
-        StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+        tab_day.setSelected(true);
+
+        vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener(){
+
             @Override
-            public void onResponse(String response) {
-                try {
-                    doJSONParser(response);
-                } catch (Exception e) {
-                    e.printStackTrace();
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                int i=0;
+                while(i<4){
+                    if(position==i){
+                        ll.findViewWithTag(i).setSelected(true);
+                    }
+                    else{
+                        ll.findViewWithTag(i).setSelected(false);
+                    }
+                    i++;
                 }
+
             }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace(); }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                return params;
-            }
-        };
-        Volley.newRequestQueue(this).add(request);
 
-
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(MainActivity.this, MoneyDetail.class);
-                intent.putExtra("id",adapter.getListViewItemId(position));
-                startActivity(intent);
+            public void onPageScrollStateChanged(int state) {
+
             }
         });
+    }
+
+    View.OnClickListener movePageListener = new View.OnClickListener(){
+        @Override
+        public void onClick(View v) {
+            int tag = (int) v.getTag();
+
+            int i = 0;
+            while (i<4){
+                if(tag==i){
+                    ll.findViewWithTag(i).setSelected(true);
+                }
+                else{
+                    ll.findViewWithTag(i).setSelected(false);
+                }
+                i++;
+            }
+            vp.setCurrentItem(tag);
+        }
+    };
+
+    private class pagerAdapter extends FragmentStatePagerAdapter{
+
+        public pagerAdapter(android.support.v4.app.FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public android.support.v4.app.Fragment getItem(int position) {
+            switch(position){
+                case 0:
+                    return new FirstFragment();
+                case 1:
+                    return new SecondFragment();
+                case 2:
+                    return new ThirdFragment();
+                case 3:
+                    return new FourthFragment();
+                default:
+                    return null;
+
+            }
+        }
+
+        @Override
+        public int getCount() {
+            return 4;
+        }
+
 
     }
+
+
+
 
     @Override
     protected void onStart() {
@@ -115,143 +155,57 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Log.i(TAG,"onResume");
-        String url = "http://192.168.56.1:8080/api/data";
-        StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    doJSONParser(response);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace(); }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                return params;
-            }
-        };
-        Volley.newRequestQueue(this).add(request);
-    }
+        setContentView(R.layout.fragment_activity_main);
 
+        vp = (ViewPager)findViewById(R.id.vp);
+        ll = (LinearLayout)findViewById(R.id.ll);
+        TextView tab_day = (TextView)findViewById(R.id.tab_day);
+        TextView tab_week = (TextView)findViewById(R.id.tab_week);
+        TextView tab_month = (TextView)findViewById(R.id.tab_month);
+        TextView tab_statistics = (TextView)findViewById(R.id.tab_statistics);
 
-    public void onButton1Clicked(View v){
-        String url = "http://192.168.56.1:8080/api/data";
+        vp.setAdapter(new pagerAdapter(getSupportFragmentManager()));
+        vp.setOffscreenPageLimit(3);
+        vp.setCurrentItem(0);
 
-        StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+        tab_day.setOnClickListener(movePageListener);
+        tab_day.setTag(0);
+        tab_week.setOnClickListener(movePageListener);
+        tab_week.setTag(1);
+        tab_month.setOnClickListener(movePageListener);
+        tab_month.setTag(2);
+        tab_statistics.setOnClickListener(movePageListener);
+        tab_statistics.setTag(3);
+
+        tab_day.setSelected(true);
+
+        vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener(){
+
             @Override
-            public void onResponse(String response) {
-                try {
-                    doJSONParser(response);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
             }
-        },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        error.printStackTrace();
+
+            @Override
+            public void onPageSelected(int position) {
+                int i=0;
+                while(i<4){
+                    if(position==i){
+                        ll.findViewWithTag(i).setSelected(true);
                     }
-                }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                return params;
+                    else{
+                        ll.findViewWithTag(i).setSelected(false);
+                    }
+                    i++;
+                }
+
             }
-        };
 
-        Volley.newRequestQueue(this).add(request);
-    }
-    public void onButton2Clicked(View v){
-        Intent intent = new Intent(this, MoneyCreate.class);
-        startActivity(intent);
+            @Override
+            public void onPageScrollStateChanged(int state) {
 
-    }
-    public void onListViewClicked(View v){
-        Intent intent = new Intent(this, MoneyDetail.class);
-        startActivity(intent);
-
-    }
-    public void println(final String data){
-        handler.post(new Runnable(){
-            public void run(){
-                textView.append(data + '\n');
             }
         });
-    }
-
-    void doJSONParser(String str){
-        StringBuffer sb = new StringBuffer();
-        adapter = new MoneyAdapter();
-
-        try{
-            JSONArray jsonArray = new JSONArray(str);
-            for(int i=0; i < jsonArray.length(); i++){
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
-                String _id = jsonObject.getString("_id");
-                String date = jsonObject.getString("date").substring(0,10);
-                String category = jsonObject.getString("category");
-                String contents = jsonObject.getString("contents");
-                int price = jsonObject.getInt("price");
-                adapter.addItem(new MoneyItem(_id, date,category,contents, price));
-                sb.append("_id : " + _id + ", date : " + date + ", category : " + category + ", contents : " + contents + ", price : " + price + "\n");
-            }
-            listView.setAdapter(adapter);
-
-            //textView.append(sb);
-
-        } catch (JSONException e){
-            e.printStackTrace();
-        }
-
-    }
-
-
-
-    class MoneyAdapter extends BaseAdapter {
-        ArrayList<MoneyItem> items = new ArrayList<MoneyItem>();
-
-        @Override
-        public int getCount() {
-            return items.size();
-        }
-
-        public String getListViewItemId(int position){
-            return items.get(position).getId();
-        }
-
-        public void addItem(MoneyItem item){
-            items.add(item);
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return items.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            MoneyItemView view = new MoneyItemView(getApplicationContext());
-            MoneyItem item = items.get(position);
-            view.setId(item.getId());
-            view.setDates(item.getDates());
-            view.setCategory(item.getCategory());
-            view.setContents(item.getContents());
-            view.setPrice(item.getPrice());
-
-            return view;
-        }
     }
 
 }

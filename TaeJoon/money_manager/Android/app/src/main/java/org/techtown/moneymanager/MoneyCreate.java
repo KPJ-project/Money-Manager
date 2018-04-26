@@ -1,7 +1,10 @@
 package org.techtown.moneymanager;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -17,6 +20,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -38,13 +42,18 @@ import java.util.Calendar;
 public class MoneyCreate extends AppCompatActivity {
     String TAG = "######################MoneyCreate";
 
+    final Context context = this;
+
     EditText dateEv;
     EditText categoryEv;
     EditText contentsEv;
     EditText priceEv;
     EditText etcEv;
     Button receiptSelect;
+    Button btnSelectIncome;
     String receipt;
+    TextView incomeEv;
+    Boolean isIncome;
 
     int mYear, mMonth, mDay;
 
@@ -65,6 +74,8 @@ public class MoneyCreate extends AppCompatActivity {
         priceEv = (EditText) findViewById(R.id.priceEv);
         etcEv = (EditText) findViewById(R.id.etcEv);
         receiptSelect = (Button)findViewById(R.id.receiptSelect);
+        incomeEv = (TextView)findViewById(R.id.incomeEv);
+        btnSelectIncome = (Button)findViewById(R.id.btnSelectIncome);
 
         final Calendar c = Calendar.getInstance();
 
@@ -86,7 +97,38 @@ public class MoneyCreate extends AppCompatActivity {
             }
         });
 
+        btnSelectIncome.setOnClickListener(onClickListener);
     }
+
+    Button.OnClickListener onClickListener = new Button.OnClickListener(){
+
+        @Override
+        public void onClick(View v) {
+            switch(v.getId()){
+                case R.id.btnSelectIncome:
+                    final CharSequence[] items={"수입", "지출"};
+
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+
+                    alertDialogBuilder.setTitle("수입/지출");
+                    alertDialogBuilder.setItems(items, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            incomeEv.setText(items[which]);
+                            if (incomeEv.getText()=="수입")
+                                isIncome=true;
+                            else
+                                isIncome=false;
+                            dialog.dismiss();
+                        }
+                    });
+
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
+                    break;
+            }
+        }
+    };
 
     public String getImageNameToUri(Uri data){
         String[] proj = {MediaStore.Images.Media.DATA};
@@ -163,6 +205,8 @@ public class MoneyCreate extends AppCompatActivity {
                 String contents = contentsEv.getText().toString();
                 String price = priceEv.getText().toString();
                 String etc = etcEv.getText().toString();
+                Boolean income = isIncome;
+
 
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.accumulate("date", date);
@@ -170,6 +214,7 @@ public class MoneyCreate extends AppCompatActivity {
                 jsonObject.accumulate("contents", contents);
                 jsonObject.accumulate("price", price);
                 jsonObject.accumulate("etc", etc);
+                jsonObject.accumulate("income", income);
 
                 HttpURLConnection con = null;
                 BufferedReader reader = null;

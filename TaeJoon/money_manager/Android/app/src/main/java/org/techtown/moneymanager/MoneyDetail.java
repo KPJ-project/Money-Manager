@@ -15,6 +15,7 @@ import android.widget.BaseAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -51,6 +52,7 @@ public class MoneyDetail extends AppCompatActivity {
     String id;
     ImageView receiptView;
     Bitmap bitmap;
+    TextView incomeEv;
 
     String receipt;
 
@@ -73,6 +75,7 @@ public class MoneyDetail extends AppCompatActivity {
         contentsEv = (EditText) findViewById(R.id.contentsEv);
         priceEv = (EditText) findViewById(R.id.priceEv);
         etcEv = (EditText) findViewById(R.id.etcEv);
+        incomeEv = (TextView)findViewById(R.id.incomeEv);
 
 
         receiptView = (ImageView)findViewById(R.id.receiptView);
@@ -176,12 +179,14 @@ public class MoneyDetail extends AppCompatActivity {
                 String contents = contentsEv.getText().toString();
                 String price = priceEv.getText().toString();
                 String etc = etcEv.getText().toString();
+                String income = incomeEv.getText().toString();
 
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.accumulate("category", category);
                 jsonObject.accumulate("contents", contents);
                 jsonObject.accumulate("price", price);
                 jsonObject.accumulate("etc", etc);
+                jsonObject.accumulate("income", income);
 
                 HttpURLConnection con = null;
                 BufferedReader reader = null;
@@ -265,7 +270,8 @@ public class MoneyDetail extends AppCompatActivity {
             String contents = jObject.getString("contents");
             String price = jObject.getString("price");
             String etc = jObject.getString("etc");
-            receipt = jObject.getString("receipt");
+            String income = jObject.getString("income");
+            //receipt = jObject.getString("receipt");
 
 
 
@@ -276,6 +282,10 @@ public class MoneyDetail extends AppCompatActivity {
             contentsEv.setText(contents);
             priceEv.setText(price);
             etcEv.setText(etc);
+            if(income=="true")
+                incomeEv.setText("수입");
+            else
+                incomeEv.setText("지출");
 
 
 
@@ -344,7 +354,7 @@ public class MoneyDetail extends AppCompatActivity {
             view.setDates(item.getDates());
             view.setCategory(item.getCategory());
             view.setContents(item.getContents());
-            view.setPrice(item.getPrice());
+            view.setPrice(item.getPrice(), item.getIncome());
 
             return view;
         }

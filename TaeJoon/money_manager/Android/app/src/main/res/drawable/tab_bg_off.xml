@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item>
+        <shape android:shape="rectangle">
+            <!-- 탭 하단 밑줄 두께 -->
+            <padding android:bottom="3dp"
+                />
+            <!-- 탭 하단 밑줄 색깔 -->
+            <solid android:color="#8C8C8C" />
+        </shape>
+    </item>
+
+    <item>
+        <shape android:shape="rectangle" >
+            <!-- 탭 색깔 -->
+            <solid android:color="#EAEAEA" />
+        </shape>
+    </item>
+</layer-list>

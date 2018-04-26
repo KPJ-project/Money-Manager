@@ -7,13 +7,15 @@ public class MoneyItem {
     String category;
     String contents;
     int price;
+    boolean income;
 
-    public MoneyItem(String id, String dates, String category, String contents, int price){
+    public MoneyItem(String id, String dates, String category, String contents, int price, boolean income){
         this.id = id;
         this.dates = dates;
         this.category = category;
         this.contents = contents;
         this.price = price;
+        this.income = income;
     }
     public String getId(){
         return id;
@@ -25,7 +27,6 @@ public class MoneyItem {
     public int getPrice(){
         return price;
     }
-
     public void setPrice(int price){
         this.price = price;
     }
@@ -33,7 +34,6 @@ public class MoneyItem {
     public String getContents(){
         return contents;
     }
-
     public void setContents(String contents){
         this.contents = contents;
     }
@@ -41,7 +41,6 @@ public class MoneyItem {
     public String getCategory(){
         return category;
     }
-
     public void setCategory(String category){
         this.category = category;
     }
@@ -49,10 +48,11 @@ public class MoneyItem {
     public String getDates(){
         return dates;
     }
-
     public void setDates(String dates){
         this.dates = dates;
     }
 
+    public boolean getIncome(){ return income; }
+    public void setIncome(boolean income){ this.income = income; }
 
 }
