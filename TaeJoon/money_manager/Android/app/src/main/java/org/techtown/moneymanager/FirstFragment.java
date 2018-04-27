@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -64,6 +65,7 @@ public class FirstFragment extends Fragment{
             public void onResponse(String response) {
                 try {
                     doJSONParser(response);
+                    //Toast.makeText(getActivity(), response.toString(), Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -118,8 +120,9 @@ public class FirstFragment extends Fragment{
                 String contents = jsonObject.getString("contents");
                 int price = jsonObject.getInt("price");
                 boolean income = jsonObject.getBoolean("income");
+
                 adapter.addItem(new MoneyItem(_id, date,category,contents, price, income));
-                sb.append("_id : " + _id + ", date : " + date + ", category : " + category + ", contents : " + contents + ", price : " + price + "\n");
+                //sb.append("_id : " + _id + ", date : " + date + ", category : " + category + ", contents : " + contents + ", price : " + price + "\n");
             }
             listView.setAdapter(adapter);
 

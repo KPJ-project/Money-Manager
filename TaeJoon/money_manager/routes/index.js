@@ -22,19 +22,29 @@ module.exports = function(app, Housekeepingbook) {
     });
 
     // GET SINGLE DATA
-    app.get('/api/data/:data_id', function(req,res){
-        Housekeepingbook.findOne({_id: req.params.data_id}, function(err, housekeepingbook){
-            if(err) return res.status(500).json({error: err});
-            if(!housekeepingbook) return res.status(404).json({error: 'housekeepingbook not found'});
-            res.json(housekeepingbook);
-        })
+    //app.get('/api/data/:data_id', function(req,res){
+    //    Housekeepingbook.findOne({_id: req.params.data_id}, function(err, housekeepingbook){
+    //        if(err) return res.status(500).json({error: err});
+    //        if(!housekeepingbook) return res.status(404).json({error: 'housekeepingbook not found'});
+    //        res.json(housekeepingbook);
+    //    })
+    //});
+
+    // GET YEAR DATA
+    app.get('/api/data/:year', function(req,res){
+        Housekeepingbook.find({ year: req.params.year
+                            }).sort({ date: -1
+                            }).exec(function(err, housekeepingbooks){
+                                if(err) return res.status(500).send({error: 'database failure'});
+                                res.json(housekeepingbooks);
+                            })
+
     });
 
-    // GET MONTH DATA (INCOME)
-    app.get('/api/income/:year/:month', function(req,res){
+    // GET MONTH DATA
+    app.get('/api/data/:year/:month', function(req,res){
         Housekeepingbook.find({ year: req.params.year, 
-                                month: req.params.month,
-                                income: "true"
+                                month: req.params.month
                             }).sort({ date: -1
                             }).exec(function(err, housekeepingbooks){
                                 if(err) return res.status(500).send({error: 'database failure'});
