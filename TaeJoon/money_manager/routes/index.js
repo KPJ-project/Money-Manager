@@ -1,3 +1,4 @@
+
 var multer = require('multer');
 
 var _storage = multer.diskStorage({
@@ -64,6 +65,55 @@ module.exports = function(app, Housekeepingbook) {
                                 res.json(housekeepingbooks);
                             })
 
+    });
+
+    // GET MONTH DATA (income)
+    app.get('/api/expense/:year/:month', function(req,res){
+        Housekeepingbook.find({ year: req.params.year, 
+                                month: req.params.month,
+                                income: "true"
+                            }).sort({ date: -1
+                            }).exec(function(err, housekeepingbooks){
+                                if(err) return res.status(500).send({error: 'database failure'});
+                                res.json(housekeepingbooks);
+                            })
+
+    });
+
+    // GET MONTH DATA (STATISTICS/EXPENSE)
+    app.get('/api/statistics/expense/:year/:month', function(req,res){
+        console.log(req.params.month);
+        var year = Number(req.params.year);
+        var month = Number(req.params.month);
+        
+        Housekeepingbook.aggregate([
+            {
+                $match:{
+                    month: month, 
+                    year: year,
+                    income: false
+                }
+            }, 
+            {
+                $group: {
+                    _id: "$category", 
+                    balance:{$sum: "$price"},
+                    count: {$sum: 1}
+                }
+
+            },
+            {
+                $sort: {
+                    balance: -1
+                }
+            }     
+        ], function(err, result){
+            if(err){
+                console.log(err);
+                return;
+            }
+            res.json(result);
+        });
     });
 
     // CREATE DATA
