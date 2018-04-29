@@ -42,14 +42,15 @@ public class StatisticsItemView extends LinearLayout {
     }
 
     public void setPercent(int percent){
-        tv_balance.setText(String.valueOf(percent));
+        tv_percent.setText(String.valueOf(percent)+"%");
     }
 
     public void setCategory(String category){
         tv_category.setText(category);
     }
+
     public void setBalance(int balance){
-        tv_balance.setText(String.valueOf(balance));
+        tv_balance.setText(String.valueOf(balance)+"원");
     }
 
     /*public void setMonth(String month){

@@ -34,7 +34,6 @@ public class MoneyMonthAdapter extends BaseAdapter {
         Context context = parent.getContext();
         MoneyItemMonthView view = new MoneyItemMonthView(context);
         MoneyMonthItem item = items.get(position);
-        Log.d("hihihi",item.getMonth());
         view.setMonth(item.getMonth());
         view.setIncome(item.getPrice_income());
         view.setExpense(item.getPrice_expense());

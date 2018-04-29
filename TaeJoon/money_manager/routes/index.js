@@ -82,7 +82,6 @@ module.exports = function(app, Housekeepingbook) {
 
     // GET MONTH DATA (STATISTICS/EXPENSE)
     app.get('/api/statistics/expense/:year/:month', function(req,res){
-        console.log(req.params.month);
         var year = Number(req.params.year);
         var month = Number(req.params.month);
         
@@ -97,14 +96,77 @@ module.exports = function(app, Housekeepingbook) {
             {
                 $group: {
                     _id: "$category", 
-                    balance:{$sum: "$price"},
-                    count: {$sum: 1}
+                    price:{$sum: "$price"},
                 }
 
             },
             {
+                $group:{
+                    _id: "$_id.category",
+                    housekeepingbooks:{
+                        $push:{
+                            category: "$_id",
+                            price: "$price"
+                        }
+                    },
+                    totalprice:{
+                        $sum: "$price"
+                    }
+                }
+            },
+            { "$unwind": "$housekeepingbooks" },
+            {
                 $sort: {
-                    balance: -1
+                    "housekeepingbooks.price": -1
+                }
+            }     
+        ], function(err, result){
+            if(err){
+                console.log(err);
+                return;
+            }
+            res.json(result);
+        });
+    });
+
+    // GET MONTH DATA (STATISTICS/INCOME)
+    app.get('/api/statistics/income/:year/:month', function(req,res){
+        var year = Number(req.params.year);
+        var month = Number(req.params.month);
+        
+        Housekeepingbook.aggregate([
+            {
+                $match:{
+                    month: month, 
+                    year: year,
+                    income: true
+                }
+            }, 
+            {
+                $group: {
+                    _id: "$category", 
+                    price:{$sum: "$price"},
+                }
+
+            },
+            {
+                $group:{
+                    _id: "$_id.category",
+                    housekeepingbooks:{
+                        $push:{
+                            category: "$_id",
+                            price: "$price"
+                        }
+                    },
+                    totalprice:{
+                        $sum: "$price"
+                    }
+                }
+            },
+            { "$unwind": "$housekeepingbooks" },
+            {
+                $sort: {
+                    "housekeepingbooks.price": -1
                 }
             }     
         ], function(err, result){

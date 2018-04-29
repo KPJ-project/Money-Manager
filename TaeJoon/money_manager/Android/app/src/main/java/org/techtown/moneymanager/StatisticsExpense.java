@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -21,6 +22,7 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONStringer;
 
 import java.util.HashMap;
 import java.util.List;
@@ -112,20 +114,25 @@ public class StatisticsExpense extends Fragment{
     }
 
     void doJSONParser(String str){
-        StringBuffer sb = new StringBuffer();
         adapter = new StatisticsAdapter();
 
         try{
             JSONArray jsonArray = new JSONArray(str);
             for(int i=0; i < jsonArray.length(); i++){
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                String category = jsonObject.getString("_id");
-                int balance = jsonObject.getInt("balance");
+                String housekeepingbooks = jsonObject.getString("housekeepingbooks");
+                String temp = "["+housekeepingbooks+"]";
 
-                total+=balance;
+                JSONArray jsonArray1 = new JSONArray(temp);
+                JSONObject jsonObject1 = jsonArray1.getJSONObject(0);
 
-                adapter.addItem(new StatisticsItem(balance, category, balance));
-                //sb.append("_id : " + _id + ", date : " + date + ", category : " + category + ", contents : " + contents + ", price : " + price + "\n");
+                String category = jsonObject1.getString("category");
+                int price = jsonObject1.getInt("price");
+                double totalprice = jsonObject.getInt("totalprice");
+                double percent = (price/totalprice)*100;
+                //Toast.makeText(getActivity(), String.valueOf((int)percent), Toast.LENGTH_SHORT).show();
+
+                adapter.addItem(new StatisticsItem((int)percent, category, price));
             }
             listView.setAdapter(adapter);
 
